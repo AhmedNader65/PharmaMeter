@@ -22,7 +22,7 @@
         android:layout_height="0dp"
         android:layout_weight=".3"
         android:orientation="vertical"
-        android:weightSum="3">
+        android:weightSum="3.2">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -89,6 +89,17 @@
             android:text="Login"
             android:background="@drawable/roundshape"
             />
+        <TextView
+            android:layout_marginTop="5dp"
+            android:linksClickable="true"
+            android:autoLink="all"
+            android:gravity="center"
+            android:layout_weight=".6"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="@string/create_new_account"
+            android:textColor="@color/logoColor"
+            />
     </LinearLayout>
 
 
@@ -98,12 +109,12 @@
         android:layout_weight=".3"
         android:gravity="center"
         android:orientation="vertical"
-        android:weightSum="2">
+        android:weightSum="1.8">
         <com.facebook.login.widget.LoginButton
             android:id="@+id/login_button"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight=".9"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="30dp" />
@@ -111,7 +122,7 @@
             android:id="@+id/sign_in_button"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight=".9"
             android:layout_marginBottom="40dp"
             />
     </LinearLayout>
