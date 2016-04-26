@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Pharma Meter</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="facebook_app_id">1071437242902066</string>
 </resources>

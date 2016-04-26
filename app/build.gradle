@@ -33,4 +33,5 @@ dependencies {
     compile 'com.facebook.android:account-kit-sdk:4.+'
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
+    compile 'com.google.android.gms:play-services:8.4.0'
 }
