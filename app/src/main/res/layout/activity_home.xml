@@ -4,107 +4,149 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_background"
-    tools:context="com.businessmonk.pharmameter.Home">
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="50dp"
+    tools:context="com.businessmonk.pharmameter.Home"
+    tools:showIn="@layout/home_custom_actionbar">
 
     <LinearLayout
-        android:gravity="center"
         android:id="@+id/firstrow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/profile_button"
             android:layout_width="112.5dp"
             android:layout_height="150dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/profile"
             android:background="@null"
-            />
+            android:scaleType="fitCenter"
+            android:src="@drawable/profile_drawable" />
+
         <ImageButton
             android:id="@+id/order_button"
             android:layout_width="112.5dp"
             android:layout_height="150dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/order"
             android:background="@null"
-            />
+            android:scaleType="fitCenter"
+            android:src="@drawable/order_drawable" />
+
         <ImageButton
             android:id="@+id/history_button"
             android:layout_width="112.5dp"
             android:layout_height="150dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/history"
             android:background="@null"
-            />
+            android:scaleType="fitCenter"
+            android:src="@drawable/history_drawable" />
     </LinearLayout>
+
     <LinearLayout
-        android:gravity="center"
         android:id="@+id/secondrow"
-        android:layout_below="@+id/firstrow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:layout_below="@+id/firstrow"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/nearby_button"
             android:layout_width="112.5dp"
             android:layout_height="150dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/nearby"
             android:background="@null"
-            />
+            android:scaleType="fitCenter"
+            android:src="@drawable/nearby_drawable" />
+
         <ImageButton
             android:id="@+id/reminder_button"
             android:layout_width="112.5dp"
             android:layout_height="150dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/reminder"
             android:background="@null"
-            />
+            android:scaleType="fitCenter"
+            android:src="@drawable/reminder_drawable" />
+
         <ImageButton
             android:id="@+id/emergency_button"
             android:layout_width="112.5dp"
             android:layout_height="150dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/emer"
             android:background="@null"
-            />
+            android:scaleType="fitCenter"
+            android:src="@drawable/emer_drawable" />
     </LinearLayout>
+
     <LinearLayout
-        android:gravity="center"
         android:id="@+id/thirdrow"
-        android:layout_below="@+id/secondrow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:layout_below="@+id/secondrow"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/invite_button"
             android:layout_width="112.5dp"
             android:layout_height="150dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/invite"
             android:background="@null"
-            />
+            android:scaleType="fitCenter"
+            android:src="@drawable/invite_drawable" />
+
         <ImageButton
             android:id="@+id/tip_button"
             android:layout_width="112.5dp"
             android:layout_height="150dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/tip"
             android:background="@null"
-            />
+            android:scaleType="fitCenter"
+            android:src="@drawable/tip_drawable" />
+
         <ImageButton
             android:id="@+id/contact_button"
             android:layout_width="112.5dp"
             android:layout_height="150dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/contact"
             android:background="@null"
-            />
+            android:scaleType="fitCenter"
+            android:src="@drawable/contact_drawable" />
     </LinearLayout>
+
+    <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/mytabhost"
+        android:background="@drawable/tabs_border"
+        android:layout_below="@+id/thirdrow"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+
+        <LinearLayout
+            android:id="@+id/LinearLayout01"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:background="@color/logoColor"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"></TabWidget>
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <ListView
+                    android:id="@+id/tab1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <ListView
+                    android:id="@+id/tab2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </TabHost>
 </RelativeLayout>

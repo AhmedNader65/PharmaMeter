@@ -222,11 +222,13 @@
             android:hint="@string/type_number_of_them" />
 
         <Button
+            android:id="@+id/continue_btn"
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:layout_below="@+id/children_num"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
+            android:onClick="Continue"
             android:background="@drawable/confirm_button"
             android:textColor="#000" />
     </RelativeLayout>
