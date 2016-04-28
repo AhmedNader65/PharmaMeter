@@ -53,33 +53,52 @@
             android:layout_marginTop="5dp"
             android:background="@color/logoColor" />
 
+        <LinearLayout
+            android:id="@+id/fullname_sec"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:weightSum="1"
+            android:layout_below="@+id/sep"
+            >
 
         <EditText
             android:layout_marginTop="50dp"
             android:textColorHint="@color/logoColor"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
             android:singleLine="true"
-            android:id="@+id/username_edit"
-            android:layout_width="match_parent"
+            android:id="@+id/first_name_edit"
+            android:layout_width="0dp"
+            android:layout_weight=".5"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/sep"
             android:ems="10"
-            android:hint="Username" />
+            android:hint="First name" />
+            <EditText
+                android:layout_marginTop="50dp"
+                android:textColorHint="@color/logoColor"
+                android:singleLine="true"
+                android:id="@+id/last_name_edit"
+                android:layout_width="0dp"
+                android:layout_weight=".5"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Last name" />
+        </LinearLayout>
 
-        <EditText
-            android:singleLine="true"
-            android:layout_marginTop="10dp"
+            <EditText
+                android:singleLine="true"
+                android:layout_marginTop="10dp"
 
-            android:layout_marginRight="50dp"
-            android:textColorHint="@color/logoColor"
-            android:id="@+id/fullName_edit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/username_edit"
-            android:layout_below="@+id/username_edit"
-            android:ems="10"
-            android:hint="Full name" />
+                android:layout_marginRight="50dp"
+                android:textColorHint="@color/logoColor"
+                android:id="@+id/username_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/fullname_sec"
+                android:layout_below="@+id/fullname_sec"
+                android:ems="10"
+                android:hint="Username" />
+
 
         <EditText
             android:singleLine="true"
@@ -90,8 +109,8 @@
             android:id="@+id/password_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/username_edit"
-            android:layout_below="@+id/fullName_edit"
+            android:layout_alignLeft="@+id/fullname_sec"
+            android:layout_below="@+id/username_edit"
             android:ems="10"
             android:hint="Password" />
 
@@ -113,126 +132,42 @@
 
 
         <EditText
-            android:inputType="date"
+            android:inputType="textEmailAddress"
             android:layout_marginTop="10dp"
             android:layout_marginRight="50dp"
             android:textColorHint="@color/logoColor"
             android:fontFamily=""
-            android:id="@+id/birthDate_edit"
+            android:id="@+id/Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/username_edit"
             android:layout_below="@+id/passwordConfirm_edit"
             android:ems="10"
             android:singleLine="true"
-            android:hint="Birthdate" />
-        <TextView
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="50dp"
-            android:id="@+id/Gender"
-            android:textColor="@color/logoColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/birthDate_edit"
-            android:layout_marginRight="30dp"
-            android:layout_alignBottom="@+id/Gender_group"
-            android:text="Gender" />
+            android:hint="Email" />
 
-        <RadioGroup
-            android:layout_marginTop="10dp"
-            android:id="@+id/Gender_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/birthDate_edit"
-            android:layout_centerHorizontal="true"
-            android:ems="10"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/male_radio"
-                android:textColor="@color/logoColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/male" />
-
-            <RadioButton
-                android:id="@+id/female_radio"
-                android:textColor="@color/logoColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/female" />
-        </RadioGroup>
-
-        <CheckBox
-            android:layout_marginTop="10dp"
-            android:textColor="@color/logoColor"
-            android:id="@+id/pregnant"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/passwordConfirm_edit"
-            android:layout_alignStart="@+id/passwordConfirm_edit"
-            android:layout_below="@+id/Gender_group"
-            android:text="Pregnant" />
-
-        <TextView
-            android:id="@+id/start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/pregnant"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/pregnant"
-            android:text="started from" />
-
-        <EditText
-            android:id="@+id/pregnant_Date"
-            android:layout_marginRight="50dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/start"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/start"
-            android:ems="7"/>
-
-        <TextView
-            android:textColor="@color/logoColor"
-
-            android:layout_marginLeft="50dp"
-            android:id="@+id/Children"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/pregnant"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
-            android:text="Children" />
-        <CheckBox
-            android:textColor="@color/logoColor"
-            android:id="@+id/don"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/Children"
-            android:layout_toRightOf="@+id/Children"
-            android:ems="10"
-            android:text="Don't have" />
         <EditText
             android:inputType="number"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="50dp"
-            android:singleLine="true"
             android:textColorHint="@color/logoColor"
-            android:id="@+id/children_num"
+            android:fontFamily=""
+            android:id="@+id/PhoneNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/don"
-            android:layout_below="@+id/don"
-            android:hint="@string/type_number_of_them" />
+            android:layout_alignLeft="@+id/username_edit"
+            android:layout_below="@+id/Email"
+            android:ems="10"
+            android:singleLine="true"
+            android:hint="Phone number" />
 
         <Button
-            android:id="@+id/continue_btn"
+            android:id="@+id/con_btn"
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:layout_below="@+id/children_num"
+            android:layout_below="@+id/PhoneNumber"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:onClick="Continue"
             android:background="@drawable/confirm_button"
             android:textColor="#000" />
     </RelativeLayout>

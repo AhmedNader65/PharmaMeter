@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,14 +14,14 @@ import android.widget.TabHost;
 import android.widget.Toast;
 
 public class Home extends Activity {
-
+    TinyDB tinyDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_custom_actionbar);
         TabHost tabHost = (TabHost) findViewById(R.id.mytabhost);
         tabHost.setup();
-
+        tinyDB = new TinyDB(getApplicationContext());
         TabHost.TabSpec tab1 = tabHost.newTabSpec("Promotion");
         tab1.setIndicator("Promotion");
         tab1.setContent(R.id.tab1);

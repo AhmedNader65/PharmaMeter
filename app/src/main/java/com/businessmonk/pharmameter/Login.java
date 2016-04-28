@@ -38,6 +38,7 @@ public class Login extends Activity {
     TinyDB tinyDB;
     EditText userNameEditable;
     EditText passwardEditable;
+    boolean auto_log = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +46,7 @@ public class Login extends Activity {
         setContentView(R.layout.activity_login);
         tinyDB = new TinyDB(getApplicationContext());
         Window window = this.getWindow();
-
+        tinyDB.putString("host","http://192.168.1.5:8080/api/");
 // clear FLAG_TRANSLUCENT_STATUS flag:
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
@@ -81,13 +82,29 @@ public class Login extends Activity {
         Intent intent = new Intent(this, Signup.class);
         startActivity(intent);
     }
+    public Context mcontext ;
 
+    public void auto_log(String username_from_signup,String password_from_Signup,Context context){
+        this.userName = username_from_signup;
+        this.password = password_from_Signup;
+        this.mcontext = context;
+        tinyDB = new TinyDB(context);
+        auto_log = true;
+        Log.e("respon", userName);
+        Log.e("respon2", password);
+        httpReqPost req = new httpReqPost();
+        req.execute("login");
+    }
 
-
-    public String parsing(String res) throws JSONException {
-
+    public String[] parsing(String res) throws JSONException {
+            String[] x = new String[2];
         JSONObject jsonObject = new JSONObject(res);
-        return jsonObject.getString("token");
+        x[0]=jsonObject.getString("token");
+        x[1]=jsonObject.getString("uid");
+
+        tinyDB.putString("token",x[0]);
+        tinyDB.putString("uid",x[1]);
+        return x;
     }
 
     public class httpReqPost extends AsyncTask<String, Void, String> {
@@ -100,7 +117,7 @@ public class Login extends Activity {
             URL url = null;
 
             try {
-                url = new URL("http://192.168.1.5:8080/api/" + what);
+                url = new URL(tinyDB.getString("host") + what);
                 Log.e("hi", url.toString());
             } catch (MalformedURLException e1) {
                 e1.printStackTrace();
@@ -156,22 +173,22 @@ public class Login extends Activity {
         @Override
         protected void onPostExecute(String strings) {
             super.onPostExecute(strings);
+            Log.e("resp",strings);
             if(strings!=""){
             try {
-                tinyDB.putString(parsing(strings),"token");
+                String tok = parsing(strings)[0];
+                String uid = parsing(strings)[1];
+                Log.e("profile2",tok);
+                Log.e("profile2",uid);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             Intent intent = new Intent(Login.this,Home.class);
                 startActivity(intent);
+
             }
             else{
                 Toast.makeText(getApplicationContext(),"Wrong username or password",Toast.LENGTH_LONG).show();
-            }
-            try {
-                Log.e("hi",parsing(strings));
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
         }
 
