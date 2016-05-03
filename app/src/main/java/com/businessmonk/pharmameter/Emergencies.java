@@ -2,6 +2,7 @@ package com.businessmonk.pharmameter;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -169,12 +170,13 @@ public class Emergencies extends AppCompatActivity {
                     "Phone : "+hospital_phone+"\n"+
                     "Start time : "+hospital_startTime.substring(0,10)+"\n"+
                     "End time : "+hospital_endTime.substring(0,10));
-            alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            alertDialog.setPositiveButton("LOCATION", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-
+                    Intent intent  = new Intent(Emergencies.this,MapsActivity.class);
+                    startActivity(intent);
                 }
             });
-                    alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    alertDialog.setNegativeButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                         }
