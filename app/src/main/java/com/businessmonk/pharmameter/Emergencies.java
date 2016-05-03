@@ -1,0 +1,186 @@
+package com.businessmonk.pharmameter;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+
+public class Emergencies extends AppCompatActivity {
+    TinyDB tinyDB ;
+    ListView emergencies_listview ;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.emergencies_custom_actionbar);
+        dialog = false;
+        tinyDB = new TinyDB(getApplicationContext());
+        emergencies_listview = (ListView)findViewById(R.id.hospitals_list_view);
+        TextView idPlace = (TextView) findViewById(R.id.id_place);
+        idPlace.setText(tinyDB.getString("uid"));
+        httpReqGet getReq = new httpReqGet();
+        getReq.execute();
+    }
+    public class httpReqGet extends AsyncTask<String,Void,String> {
+
+        //String className;
+        @Override
+        protected String doInBackground(String... strings) {
+            String response = "";
+            //className = strings[1];
+            URL url = null;
+            Log.e("responso2",tinyDB.getString("host")+"hospitals/"+"?token="+tinyDB.getString("token"));
+            try {
+                if(!dialog) {
+                    url = new URL(tinyDB.getString("host") + "hospitals/" + "?token=" + tinyDB.getString("token"));
+                }else{
+                    url = new URL(tinyDB.getString("host") + "emergencyDetails/" +tinyDB.getString("hos_id")+ "?token=" + tinyDB.getString("token"));
+                }
+                Log.e("responso",url.toString());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+
+            HttpURLConnection conn = null;
+            try {
+                conn = (HttpURLConnection) url.openConnection();
+
+                conn.setRequestMethod("GET");
+                conn.setDoInput(true);
+                conn.setUseCaches(false);
+                conn.setRequestMethod("GET");
+                conn.setConnectTimeout(20000);
+                conn.addRequestProperty("Accept", "application/json");
+                OutputStream os = conn.getOutputStream();
+                OutputStreamWriter wr = new OutputStreamWriter(os);
+                wr.flush();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            int responseCode =0;
+            try {
+                responseCode = conn.getResponseCode();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                String line;
+                BufferedReader br = null;
+                String x = conn.getHeaderField("Authorization");
+                String[] xx= x.split(" ");
+                tinyDB.putString("token",xx[1]);
+                try {
+                    br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+                try {
+                    while ((line = br.readLine()) != null) {
+                        response += line;
+                    }
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            } else {
+                response = "";
+
+            }
+            return response;
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("hiiii",s);
+            try {
+                parsing(s);
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+
+        }
+
+    }
+    ArrayList<String> hospitalsName ;
+    ArrayList<String> hospitalsId ;
+    boolean dialog = false;
+    public void parsing(String res) throws JSONException {
+        Log.e("jsonString",res);
+        if(!dialog){
+        hospitalsName = new ArrayList<>();
+            hospitalsId = new ArrayList<>();
+
+            JSONArray jsonArray = new JSONArray(res);
+        for(int i = 0 ; i<jsonArray.length();i++){
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+           String hospitalId = jsonObject.getString("id");
+            String hospitalName = jsonObject.getString("hospital_name");
+            hospitalsName.add(hospitalName);
+              hospitalsId.add(hospitalId);
+        }
+        ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,hospitalsName);
+        emergencies_listview.setAdapter(adapter);
+        emergencies_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                dialog = true;
+                tinyDB.putString("hos_id",hospitalsId.get(i));
+                httpReqGet getReq = new httpReqGet();
+                getReq.execute();
+            }
+        });
+
+    }else{
+            JSONObject jsonObject = new JSONObject(res);
+            String hospital_name = jsonObject.getString("hospital_name");
+            String hospital_address = jsonObject.getString("address");
+            String hospital_phone = jsonObject.getString("phone_number");
+            String hospital_startTime = jsonObject.getString("start_time");
+            String hospital_endTime = jsonObject.getString("end_time");
+
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(Emergencies.this);
+            alertDialog.setTitle(hospital_name);
+            alertDialog.setMessage("Address : "+hospital_address+"\n"+
+                    "Phone : "+hospital_phone+"\n"+
+                    "Start time : "+hospital_startTime.substring(0,10)+"\n"+
+                    "End time : "+hospital_endTime.substring(0,10));
+            alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+
+                }
+            });
+                    alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            alertDialog.show();
+        }
+
+    }
+}

@@ -2,6 +2,7 @@ package com.businessmonk.pharmameter;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,10 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Home extends Activity {
     TinyDB tinyDB;
+    ImageButton profile_btn;
+    ImageButton emergencies_btn ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +26,8 @@ public class Home extends Activity {
         TabHost tabHost = (TabHost) findViewById(R.id.mytabhost);
         tabHost.setup();
         tinyDB = new TinyDB(getApplicationContext());
+        TextView idPlace = (TextView) findViewById(R.id.id_place);
+        idPlace.setText(tinyDB.getString("uid"));
         TabHost.TabSpec tab1 = tabHost.newTabSpec("Promotion");
         tab1.setIndicator("Promotion");
         tab1.setContent(R.id.tab1);
@@ -37,6 +43,22 @@ public class Home extends Activity {
             @Override
             public void onClick(View view) {
                 Home.this.openOptionsMenu();
+            }
+        });
+        profile_btn = (ImageButton)findViewById(R.id.profile_button);
+        profile_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this,Profile.class);
+                startActivity(intent);
+            }
+        });
+        emergencies_btn =(ImageButton)findViewById(R.id.emergency_button);
+        emergencies_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this,Emergencies.class);
+                startActivity(intent);
             }
         });
     }

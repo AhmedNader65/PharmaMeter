@@ -55,5 +55,5 @@
 
 </RelativeLayout>
     </android.support.design.widget.AppBarLayout>
-    <include layout="@layout/activity_home"/>
+    <include layout="@layout/activity_emergencies"/>
     </android.support.design.widget.CoordinatorLayout>

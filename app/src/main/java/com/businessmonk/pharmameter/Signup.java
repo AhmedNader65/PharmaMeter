@@ -51,7 +51,7 @@ public class Signup extends Activity {
         tinyDB = new TinyDB(getApplicationContext());
         userNameView = (EditText) findViewById(R.id.username_edit);
         firstNameView = (EditText) findViewById(R.id.first_name_edit);
-        lastNameView = (EditText) findViewById(R.id.first_name_edit);
+        lastNameView = (EditText) findViewById(R.id.last_name_edit);
         passwordView = (EditText) findViewById(R.id.password_edit);
         passwordConfirmView = (EditText) findViewById(R.id.passwordConfirm_edit);
         emailView = (EditText)findViewById(R.id.Email);
@@ -125,6 +125,8 @@ public class Signup extends Activity {
                         .appendQueryParameter("last_name", lastName)
                         .appendQueryParameter("email", email)
                         .appendQueryParameter("mobile_number", phone);
+                Log.e("first_name_test",firstName);
+                Log.e("first_name_test",lastName);
 
                 String query = builder.build().getEncodedQuery();
                 OutputStream os = conn.getOutputStream();

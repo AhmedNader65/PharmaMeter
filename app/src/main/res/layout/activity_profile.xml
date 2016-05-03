@@ -1,9 +1,377 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    tools:context="com.businessmonk.pharmameter.Profile"
+
+    android:fillViewport="true"
+android:layout_height="match_parent" >
+<RelativeLayout
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/login_background"
     tools:context="com.businessmonk.pharmameter.Profile">
-    
+    <com.businessmonk.pharmameter.CircularImageView
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:id="@+id/profile_pic_circular"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/profile_pic"/>
+    <LinearLayout
+        android:id="@+id/view_sec"
+        android:gravity="center"
+        android:layout_below="@+id/profile_pic_circular"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:visibility="visible"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ahmed Ahmed "
+            android:textColor="@color/logoColor"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:id="@+id/profile_name_text"
+            android:layout_centerHorizontal="true"
+            />
+
+        <ImageView
+            android:id="@+id/profile_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/edit1"
+
+            />
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="000 0000 0000"
+            android:textSize="20dp"
+            android:textColor="@color/logoColor"
+            android:id="@+id/profile_mobile_num_text"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8 taba st"
+            android:textSize="20dp"
+            android:textColor="@color/logoColor"
+            android:id="@+id/profile_address_text"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mansoura"
+            android:textSize="25dp"
+            android:textColor="@color/logoColor"
+            android:id="@+id/area_text"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/edit_sec"
+        android:gravity="center"
+    android:layout_below="@+id/profile_pic_circular"
+    android:layout_width="match_parent"
+    android:layout_marginTop="4dp"
+        android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <EditText
+        android:id="@+id/profile_first_name_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ahmed"
+        android:textColor="@color/logoColor"
+        android:textSize="30dp"
+        android:textStyle="bold"
+
+        android:layout_centerHorizontal="true"
+        />
+        <EditText
+            android:id="@+id/profile_last_name_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ahmed"
+            android:textColor="@color/logoColor"
+            android:textSize="30dp"
+            android:textStyle="bold"
+
+            android:layout_centerHorizontal="true"
+            />
+        <ImageView
+            android:id="@+id/profile_edit_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/confirm1"
+            />
+        </LinearLayout>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="000 0000 0000"
+            android:textSize="20dp"
+            android:textColor="@color/logoColor"
+            android:id="@+id/profile_mobile_num_edit"
+            />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8 taba st"
+            android:textSize="20dp"
+            android:textColor="@color/logoColor"
+            android:id="@+id/profile_address_edit"
+            />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mansoura"
+            android:textSize="25dp"
+            android:textColor="@color/logoColor"
+            android:id="@+id/area_edit"
+            />
+</LinearLayout>
+    <TextView
+        android:layout_alignBaseline="@+id/email_profile_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/logoColor"
+        android:id="@+id/textView2" />
+    <EditText
+        android:id="@+id/email_profile_edit"
+        android:layout_below="@+id/edit_sec"
+        android:singleLine="true"
+        android:layout_width="wrap_content"
+        android:ems="10"
+        android:layout_alignLeft="@+id/don"
+        android:hint="no entry"
+        android:textColorHint="@color/logoColor"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/email_edit_icon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/edit1"
+        android:layout_toRightOf="@+id/email_profile_edit"
+        android:layout_below="@+id/edit_sec"/>
+    <ImageView
+        android:id="@+id/email_confirm_icon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/confirm1"
+        android:visibility="invisible"
+        android:layout_toRightOf="@+id/email_profile_edit"
+        android:layout_below="@+id/edit_sec" />
+    <TextView
+        android:layout_alignBaseline="@+id/phone_profile_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/logoColor"
+        android:id="@+id/textView3" />
+    <EditText
+        android:id="@+id/phone_profile_edit"
+        android:layout_below="@+id/email_profile_edit"
+        android:singleLine="true"
+        android:layout_width="wrap_content"
+        android:ems="10"
+        android:layout_alignLeft="@+id/don"
+        android:hint="no entry"
+        android:textColorHint="@color/logoColor"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/phone_edit_icon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/edit1"
+        android:layout_toRightOf="@+id/phone_profile_edit"
+        android:layout_below="@+id/email_profile_edit"
+        />
+    <ImageView
+        android:id="@+id/phone_confirm_icon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/confirm1"
+        android:visibility="invisible"
+        android:layout_toRightOf="@+id/phone_profile_edit"
+        android:layout_below="@+id/email_profile_edit"/>
+    <TextView
+        android:layout_alignBaseline="@+id/birth_date_profile_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Birth date"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/logoColor"
+        android:id="@+id/textView" />
+    <EditText
+        android:id="@+id/birth_date_profile_edit"
+        android:layout_below="@+id/phone_profile_edit"
+        android:singleLine="true"
+        android:layout_width="wrap_content"
+        android:ems="10"
+        android:layout_alignLeft="@+id/don"
+        android:hint="no entry"
+        android:textColorHint="@color/logoColor"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/birth_edit_icon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/edit1"
+        android:layout_below="@+id/phone_profile_edit"
+        android:layout_toRightOf="@+id/birth_date_profile_edit" />
+    <ImageView
+        android:id="@+id/birth_confirm_icon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/confirm1"
+        android:visibility="invisible"
+        android:layout_below="@+id/phone_profile_edit"
+        android:layout_toRightOf="@+id/birth_date_profile_edit" />
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/Gender"
+        android:textColor="@color/logoColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/birth_date_profile_edit"
+        android:layout_marginRight="30dp"
+        android:layout_alignBottom="@+id/Gender_group"
+        android:text="Gender" />
+
+    <RadioGroup
+        android:layout_marginTop="10dp"
+        android:id="@+id/Gender_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/birth_date_profile_edit"
+
+        android:layout_toRightOf="@+id/Gender"
+        android:ems="10"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/male_radio"
+            android:textColor="@color/logoColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/male" />
+
+        <RadioButton
+            android:id="@+id/female_radio"
+            android:textColor="@color/logoColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/female" />
+    </RadioGroup>
+
+    <CheckBox
+        android:layout_marginTop="10dp"
+        android:textColor="@color/logoColor"
+        android:id="@+id/pregnant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/Gender_group"
+        android:layout_alignStart="@+id/Gender_group"
+        android:layout_below="@+id/Gender_group"
+        android:text="Pregnant" />
+
+    <TextView
+        android:id="@+id/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/pregnant"
+        android:layout_below="@+id/pregnant"
+        android:text="started from" />
+
+    <EditText
+        android:id="@+id/pregnant_Date"
+        android:layout_marginRight="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/start"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/start"
+        android:ems="7"/>
+    <CheckBox
+        android:layout_marginTop="10dp"
+        android:textColor="@color/logoColor"
+        android:id="@+id/lactating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/Gender_group"
+        android:layout_alignStart="@+id/Gender_group"
+        android:layout_below="@+id/start"
+        android:text="Currently lactating" />
+    <TextView
+        android:textColor="@color/logoColor"
+
+        android:layout_marginLeft="20dp"
+        android:id="@+id/Children"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lactating"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:text="Children" />
+    <CheckBox
+        android:textColor="@color/logoColor"
+        android:id="@+id/don"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/Children"
+        android:layout_toRightOf="@+id/Children"
+        android:ems="10"
+        android:layout_alignLeft="@+id/pregnant"
+        android:text="Don't have" />
+    <EditText
+        android:inputType="number"
+        android:singleLine="true"
+        android:textColorHint="@color/logoColor"
+        android:id="@+id/children_num"
+        android:layout_width="wrap_content"
+        android:ems="10"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/don"
+        android:layout_below="@+id/don"
+        android:hint="@string/type_number_of_them" />
+
+
+
+    <ImageView
+        android:id="@+id/pregnantdate_edit_icon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/edit1"
+        android:layout_below="@+id/pregnant"
+        android:layout_alignLeft="@+id/birth_edit_icon"
+        android:layout_alignStart="@+id/birth_edit_icon" />
+    <ImageView
+        android:id="@+id/pregnantdate_confirm_icon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/confirm1"
+        android:visibility="invisible"
+        android:layout_below="@+id/pregnant"
+        android:layout_alignLeft="@+id/birth_edit_icon"
+        android:layout_alignStart="@+id/birth_edit_icon" />
+
 </RelativeLayout>
+</ScrollView>
