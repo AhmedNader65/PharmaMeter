@@ -22,9 +22,9 @@ public class Promotions extends AppCompatActivity {
         setContentView(R.layout.promotions_activity);
 
         TextView med_namet = (TextView)findViewById(R.id.med_name);
-        TextView med_pharamcyt = (TextView)findViewById(R.id.med_phamacy);
-        TextView med_before = (TextView)findViewById(R.id.first_price);
-        TextView med_after = (TextView)findViewById(R.id.sale_price);
+//        TextView med_pharamcyt = (TextView)findViewById(R.id.med_phamacy);
+//        TextView med_before = (TextView)findViewById(R.id.first_price);
+//        TextView med_after = (TextView)findViewById(R.id.sale_price);
         TextView med_date = (TextView)findViewById(R.id.date);
 
         Intent in = getIntent();
@@ -37,7 +37,7 @@ public class Promotions extends AppCompatActivity {
         String expired = in.getSerializableExtra("expierd").toString();
 
         med_namet.setText(med_name);
-        med_pharamcyt.setText(med_pharamcy);
+//        med_pharamcyt.setText(med_pharamcy);
 //        med_before.setText(before);
 //        med_after.setText(after);
         med_date.setText(expired);

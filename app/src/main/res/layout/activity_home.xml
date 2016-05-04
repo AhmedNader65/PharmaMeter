@@ -17,6 +17,9 @@
     tools:showIn="@layout/home_custom_actionbar">
 
     <LinearLayout
+        android:descendantFocusability="beforeDescendants"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:id="@+id/firstrow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -118,26 +121,26 @@
         android:id="@+id/mytabhost"
         android:background="@drawable/tabs_border"
         android:layout_below="@+id/thirdrow"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
         <LinearLayout
             android:id="@+id/LinearLayout01"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TabWidget
                 android:id="@android:id/tabs"
                 android:background="@color/logoColor"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"></TabWidget>
 
             <FrameLayout
                 android:id="@android:id/tabcontent"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <ListView
                     android:id="@+id/tab1"
