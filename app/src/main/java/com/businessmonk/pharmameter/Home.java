@@ -315,7 +315,9 @@ public class Home extends Activity {
          ListData listData = mData.get(position);
 
          med_name.setText(listData.getMedicine(position));
-         imageView.setImageBitmap(listData.getImage(position));
+         if(listData.getImage(position) != null) {
+             imageView.setImageBitmap(listData.getImage(position));
+         }
          pharamcr_name.setText(listData.getPharamcy(position));
          date.setText(listData.getDate(position));
 
