@@ -28,16 +28,18 @@ public class Promotions extends AppCompatActivity {
         TextView med_date = (TextView)findViewById(R.id.date);
 
         Intent in = getIntent();
+
+        
         String med_name =  in.getSerializableExtra("med_name").toString();
         String med_pharamcy =  in.getSerializableExtra("med_pharamcy").toString();
-        String before = in.getSerializableExtra("before").toString();
-        String after = in.getSerializableExtra("after").toString();
+//        String before = in.getSerializableExtra("before").toString();
+//        String after = in.getSerializableExtra("after").toString();
         String expired = in.getSerializableExtra("expierd").toString();
 
         med_namet.setText(med_name);
         med_pharamcyt.setText(med_pharamcy);
-        med_before.setText(before);
-        med_after.setText(after);
+//        med_before.setText(before);
+//        med_after.setText(after);
         med_date.setText(expired);
 
 

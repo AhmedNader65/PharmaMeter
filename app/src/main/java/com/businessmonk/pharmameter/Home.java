@@ -91,7 +91,13 @@ public class Home extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+            Intent in = new Intent();
+                ListData ll = new ListData();
+                in.putExtra("med_pharamcy" , ll.getPharamcy(i));
+                in.putExtra("med_name", ll.getMedicine(i));
+                in.putExtra("expierd" , ll.getDate(i));
 
+                startActivity(in);
 
             }
         });
