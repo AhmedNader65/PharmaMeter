@@ -2,7 +2,11 @@ package com.businessmonk.pharmameter;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.DataSetObserver;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,13 +14,34 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ShareActionProvider;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+
 public class Home extends Activity {
+    ArrayList<Bitmap> ImageBitmap = new ArrayList<Bitmap>();
+    ArrayList<String> pharamcyName = new ArrayList<>();
+    ArrayList<String> firstPrice = new ArrayList<>();
+    ArrayList<String> secondPrice = new ArrayList<>();
+    ArrayList<String> medNames = new ArrayList<>();
+    ArrayList<String> date = new ArrayList<>();
+
     TinyDB tinyDB;
     ImageButton profile_btn, emergencies_btn, nearby_btn ,invite_btn,order_btn,history_btn, reminder_btn,tip_btn,contact_btn;
     private ShareActionProvider mShareActionProvider;
@@ -144,4 +169,206 @@ public class Home extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
+
+    public class ListData {
+
+        //getBitmap
+
+        public void setImage(Bitmap img)
+        {
+            ImageBitmap.add(img);
+        }
+
+        public Bitmap getImage(int postion)
+        {
+            return ImageBitmap.get(postion);
+        }
+
+
+//pharamcy
+
+        public void setPharamcy(String n)
+        {
+            pharamcyName.add(n);
+        }
+
+        public String getPharamcy(int postion)
+        {
+            return pharamcyName.get(postion);
+        }
+
+
+// medicine name
+
+        public void setMedicine(String n)
+        {
+            medNames.add(n);
+        }
+
+        public String getMedicine(int postion)
+        {
+            return medNames.get(postion);
+        }
+
+
+//first price
+
+        public void setPFirst(String n)
+        {
+            firstPrice.add(n);
+        }
+
+        public String getFirst(int postion)
+        {
+            return firstPrice.get(postion);
+        }
+
+
+        //second price
+
+        public void setsecond(String n)
+        {
+
+            secondPrice.add(n);
+        }
+
+        public String getsecond(int postion)
+        {
+            return secondPrice.get(postion);
+        }
+
+
+
+        public void setDate(String n)
+        {
+            date.add(n);
+        }
+
+        public String getDate(int postion)
+        {
+            return date.get(postion);
+        }
+    }
+
+
+ public class customAdapter extends ArrayAdapter
+
+ {
+      Activity mContext;
+      int res;
+      ArrayList<ListData> mData;
+
+     public customAdapter(Activity context, int resource , ArrayList<ListData> data) {
+         super(context, resource);
+         mContext = context;
+         res = resource;
+         mData = data;
+     }
+
+
+     public View getView(int position,View view,ViewGroup parent) {
+
+         LayoutInflater inflater=mContext.getLayoutInflater();
+         View rowView=inflater.inflate(R.layout.listview_item, null,true);
+
+         TextView med_name = (TextView) rowView.findViewById(R.id.med_name);
+         ImageView imageView = (ImageView) rowView.findViewById(R.id.image_icon);
+         TextView pharamcr_name = (TextView) rowView.findViewById(R.id.med_phamacy);
+         TextView date = (TextView) rowView.findViewById(R.id.expired);
+
+
+         ListData listData = mData.get(position);
+
+         med_name.setText(listData.getMedicine(position));
+         imageView.setImageBitmap(listData.getImage(position));
+         pharamcr_name.setText(listData.getPharamcy(position));
+         date.setText(listData.getDate(position));
+
+         return rowView;
+
+     };
+
+ }
+
+
+    public class hgetPromation extends AsyncTask<String,Void,String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            String response = "";
+            URL url = null;
+            try {
+                url = new URL(tinyDB.getString("host")+"promotions/"+"?token="+tinyDB.getString("token"));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+
+            HttpURLConnection conn = null;
+            try {
+                conn = (HttpURLConnection) url.openConnection();
+
+                conn.setRequestMethod("GET");
+                conn.setDoInput(true);
+                conn.setUseCaches(false);
+                conn.setRequestMethod("GET");
+                conn.setConnectTimeout(20000);
+                conn.addRequestProperty("Accept", "application/json");
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            int responseCode =0;
+            try {
+                responseCode = conn.getResponseCode();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+
+
+                String x = conn.getHeaderField("Authorization");
+                String[] xx = x.split(" ");
+
+                tinyDB.putString("token",xx[1]);
+                String line;
+                BufferedReader br = null;
+                try {
+                    br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+                try {
+                    while ((line = br.readLine()) != null) {
+                        response += line;
+                    }
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            } else {
+                response = "";
+
+            }
+
+
+            Log.e("eee" , response);
+            return response;
+
+
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+
+        }
+
+    }
+
 }

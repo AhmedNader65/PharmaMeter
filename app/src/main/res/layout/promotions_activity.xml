@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="#E1F5FE"
+    tools:context="com.businessmonk.pharmameter.Promotions"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/promotions_icon"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Promotions "
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:textStyle="normal|bold|italic"
+        android:textColor="#03A9F4"
+        android:textSize="30sp" android:id="@+id/title"/>
+
+   <ImageView android:layout_width="match_parent"
+       android:layout_height="230dp"
+       android:src="@drawable/drugs"
+       android:scaleType="fitXY"
+       android:id="@+id/medicine_img"
+       android:layout_below="@+id/title"/>
+
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:text="Moon"
+        android:layout_marginLeft="8dp"
+        android:textSize="30sp"
+        android:id="@+id/medicine_name"
+        android:layout_marginTop="200dp"/>
+
+    //------------------------------------------------------------
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/medicine_img"
+        android:layout_marginTop="20dp"
+        android:id="@+id/Linerar1">
+
+        <ImageView android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/pharmacyicon"
+            android:layout_marginLeft="8dp"
+            android:id="@+id/pharmacy"
+            android:layout_marginTop="8dp"
+            android:scaleType="fitCenter"/>
+
+
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="pharamcy name :"
+            android:layout_alignRight="@id/pharmacy"
+            android:layout_marginLeft="8dp"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:textColor="#0277BD"
+            android:textStyle="bold"/>
+
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="name"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="6dp"
+            android:id="@+id/pharmacy_name"
+            android:textColor="#0277BD" android:textStyle="bold"/></LinearLayout>
+
+    //---------------------------------------------------------------
+
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/Linerar1"
+        android:layout_marginTop="20dp"
+        android:id="@+id/Linerar2">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/before_icon"
+            android:layout_marginLeft="8dp"
+
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="First price :"
+            android:layout_marginLeft="8dp"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:textColor="#0277BD"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50 L.E"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="6dp"
+            android:id="@+id/first_price"
+
+            android:textColor="#0277BD"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/Linerar2"
+        android:layout_marginTop="20dp"
+        android:id="@+id/Linerar3">
+
+        <ImageView android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/after_icon"
+            android:layout_marginLeft="8dp"/>
+
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="after sale:"
+            android:layout_marginLeft="8dp"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:textColor="#0277BD" android:textStyle="bold"/>
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="40 L.E"
+            android:layout_marginTop="8dp"
+            android:id="@+id/sale_price"
+            android:layout_marginLeft="6dp" android:textColor="#0277BD" android:textStyle="bold"/></LinearLayout><LinearLayout android:layout_width="match_parent" android:layout_height="35dp" android:orientation="horizontal" android:layout_below="@+id/Linerar3" android:layout_marginTop="20dp" android:id="@+id/Linerar4"><ImageView android:layout_width="30dp" android:layout_height="30dp" android:src="@drawable/clockicon" android:layout_marginLeft="8dp"/><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Experired Date :" android:layout_alignRight="@id/pharmacy" android:layout_marginLeft="8dp" android:gravity="center" android:layout_marginTop="8dp" android:textColor="#0277BD"
+    android:textStyle="bold"/>
+
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20/5/2016"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="6dp"
+        android:id="@+id/date"
+        android:textColor="#0277BD" android:textStyle="bold"/></LinearLayout><ImageButton android:layout_width="match_parent" android:layout_height="50dp" android:layout_alignParentBottom="true" android:src="@drawable/order" android:id="@+id/order"
+    android:scaleType="fitCenter" android:text="order" android:background="#E1F5FE"/></RelativeLayout>

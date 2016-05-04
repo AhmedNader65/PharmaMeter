@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/listViewItem"
+    >
+
+
+
+
+   <ImageView
+       android:layout_width="60dp"
+       android:layout_height="60dp"
+       android:layout_marginLeft="8dp"
+       android:layout_marginTop="8dp"
+       android:id="@+id/image_icon"
+       android:src="@drawable/contact"
+
+       />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Net Look"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="90dp"
+        android:textStyle="normal|bold|italic"
+        android:textColor="#03A9F4"
+        android:textSize="20sp"
+        android:id="@+id/med_name"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/med_name"
+         android:text="pharamcy "
+        android:layout_marginLeft="90dp"
+        android:layout_marginTop="8dp"
+        android:id="@+id/med_phamacy"
+        />
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentRight="true"
+             android:text="expired at : "
+             android:layout_marginTop="60dp"
+             android:layout_marginRight="8dp"
+             android:id="@+id/expired"
+
+             />
+
+
+
+</RelativeLayout>
