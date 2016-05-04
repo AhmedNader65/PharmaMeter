@@ -27,26 +27,6 @@
 
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/med_name"
-         android:text="pharamcy "
-        android:layout_marginLeft="90dp"
-        android:layout_marginTop="8dp"
-        android:id="@+id/med_phamacy"
-        />
-
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignParentRight="true"
-             android:text="expired at : "
-             android:layout_marginTop="60dp"
-             android:layout_marginRight="8dp"
-             android:id="@+id/expired"
-
-             />
 
 
 

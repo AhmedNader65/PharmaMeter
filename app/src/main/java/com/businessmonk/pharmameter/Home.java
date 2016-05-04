@@ -47,6 +47,7 @@ public class Home extends Activity {
     public ArrayList<String> medNames;
     public ArrayList<String> date;
     public ArrayList<ListData> data;
+    public ArrayList<String> head;
     customAdapter custom;
    ;
 
@@ -60,6 +61,7 @@ public class Home extends Activity {
         setContentView(R.layout.home_custom_actionbar);
         data = new ArrayList<>();
         date = new ArrayList<>();
+        head =  new ArrayList<>();
         medNames = new ArrayList<>();
         secondPrice = new ArrayList<>();
         firstPrice = new ArrayList<>();
@@ -286,6 +288,17 @@ public class Home extends Activity {
         {
             return date.get(postion);
         }
+
+
+        public void setHead(String h)
+        {
+            head.add(h);
+        }
+
+        public String getHead(int postion)
+        {
+            return head.get(postion);
+        }
     }
 
 
@@ -311,18 +324,18 @@ public class Home extends Activity {
 
          TextView med_name = (TextView) rowView.findViewById(R.id.med_name);
          ImageView imageView = (ImageView) rowView.findViewById(R.id.image_icon);
-         TextView pharamcr_name = (TextView) rowView.findViewById(R.id.med_phamacy);
-         TextView date = (TextView) rowView.findViewById(R.id.expired);
+//         TextView pharamcr_name = (TextView) rowView.findViewById(R.id.med_phamacy);
+//         TextView date = (TextView) rowView.findViewById(R.id.expired);
 
 
          ListData listData = mData.get(position);
 
-         med_name.setText(listData.getMedicine(position));
+         med_name.setText(listData.getHead(position));
          if(listData.getImage(position) != null) {
              imageView.setImageBitmap(listData.getImage(position));
          }
-         pharamcr_name.setText(listData.getPharamcy(position));
-         date.setText(listData.getDate(position));
+//         pharamcr_name.setText(listData.getPharamcy(position));
+//         date.setText(listData.getDate(position));
 
          return rowView;
 
@@ -418,6 +431,7 @@ public class Home extends Activity {
                  listData.setMedicine(jsonObject.getString("id"));
                  listData.setPharamcy(jsonObject.getString("pharmacy_id"));
                  listData.setDate(jsonObject.getString("end_date"));
+                 listData.setHead(jsonObject.getString("head"));
                  if(jsonObject.getString("image") != null) {
                      img = jsonObject.getString("image");
                      listData.setImage(getImageFromHash(img));
@@ -427,9 +441,6 @@ public class Home extends Activity {
              }
 
         }
-
-
-
 
 
         // get image from Hash
