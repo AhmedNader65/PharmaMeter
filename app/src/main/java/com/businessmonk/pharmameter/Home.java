@@ -11,14 +11,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ShareActionProvider;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class Home extends Activity {
     TinyDB tinyDB;
-    ImageButton profile_btn;
-    ImageButton emergencies_btn ;
+    ImageButton profile_btn, emergencies_btn, nearby_btn ,invite_btn,order_btn,history_btn, reminder_btn,tip_btn,contact_btn;
+    private ShareActionProvider mShareActionProvider;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +60,65 @@ public class Home extends Activity {
             public void onClick(View view) {
                 Intent intent = new Intent(Home.this,Emergencies.class);
                 startActivity(intent);
+            }
+        });
+        nearby_btn =(ImageButton)findViewById(R.id.nearby_button);
+        nearby_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this,Nearby.class);
+                startActivity(intent);
+            }
+        });
+        order_btn =(ImageButton)findViewById(R.id.order_button);
+        order_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this,Order.class);
+                startActivity(intent);
+            }
+        });
+        reminder_btn =(ImageButton)findViewById(R.id.reminder_button);
+        reminder_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this,Reminder.class);
+                startActivity(intent);
+            }
+        });
+        tip_btn =(ImageButton)findViewById(R.id.tip_button);
+        tip_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this,Tip.class);
+                startActivity(intent);
+            }
+        });
+        contact_btn =(ImageButton)findViewById(R.id.contact_button);
+        contact_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this,Contact.class);
+                startActivity(intent);
+            }
+        });
+        history_btn =(ImageButton)findViewById(R.id.history_button);
+        history_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this,History.class);
+                startActivity(intent);
+            }
+        });
+        invite_btn =(ImageButton)findViewById(R.id.invite_button);
+        invite_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "\n\n");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "hi, I'm using Pharma Meter. It's amazing app you can also have it from here");
+                startActivity(Intent.createChooser(sharingIntent,  "Where to invite"));;
             }
         });
     }
