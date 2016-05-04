@@ -4,10 +4,6 @@
     android:layout_height="wrap_content"
     android:id="@+id/listViewItem"
     >
-
-
-
-
    <ImageView
        android:layout_width="60dp"
        android:layout_height="60dp"

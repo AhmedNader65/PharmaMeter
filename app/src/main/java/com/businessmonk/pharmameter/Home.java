@@ -40,14 +40,14 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class Home extends Activity {
-   public ArrayList<Bitmap> ImageBitmap = new ArrayList<Bitmap>();
-    public ArrayList<String> pharamcyName = new ArrayList<>();
-    public ArrayList<String> firstPrice = new ArrayList<>();
-    public ArrayList<String> secondPrice = new ArrayList<>();
-    public ArrayList<String> medNames = new ArrayList<>();
-    public ArrayList<String> date = new ArrayList<>();
-    public ArrayList<ListData> data = new ArrayList<>();
-    customAdapter custom = new customAdapter(this,R.id.listViewItem , data );
+   public ArrayList<Bitmap> ImageBitmap;
+    public ArrayList<String> pharamcyName;
+    public ArrayList<String> firstPrice ;
+    public ArrayList<String> secondPrice;
+    public ArrayList<String> medNames;
+    public ArrayList<String> date;
+    public ArrayList<ListData> data;
+    customAdapter custom;
    ;
 
 
@@ -58,7 +58,15 @@ public class Home extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_custom_actionbar);
+        data = new ArrayList<>();
+        date = new ArrayList<>();
+        medNames = new ArrayList<>();
+        secondPrice = new ArrayList<>();
+        firstPrice = new ArrayList<>();
+        pharamcyName = new ArrayList<>();
+        ImageBitmap= new ArrayList<Bitmap>();
         TabHost tabHost = (TabHost) findViewById(R.id.mytabhost);
+        custom = new customAdapter(this,R.id.listViewItem , data );
         tabHost.setup();
         tinyDB = new TinyDB(getApplicationContext());
         TextView idPlace = (TextView) findViewById(R.id.id_place);
@@ -88,6 +96,8 @@ public class Home extends Activity {
 
 
 
+        getPromation p = new getPromation();
+        p.execute();
         ImageButton menu_btn = (ImageButton) findViewById(R.id.menu_button);
         menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,13 +182,6 @@ public class Home extends Activity {
         });
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        getPromation p = new getPromation();
-        p.execute();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -405,15 +408,15 @@ public class Home extends Activity {
 
 
             JSONArray jsonArray = new JSONArray(s);
-            JSONObject jsonObject = new JSONObject();
               String img = null;
               String[] result = null;
-
+            Log.e("json",jsonArray.length()+"");
              for(int i =0 ; i<jsonArray.length() ; i++)
              {
+                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                  ListData listData = new ListData();
                  listData.setMedicine(jsonObject.getString("id"));
-                 listData.setPharamcy(jsonObject.getString("pharamcy_id"));
+                 listData.setPharamcy(jsonObject.getString("pharmacy_id"));
                  listData.setDate(jsonObject.getString("end_date"));
                  if(jsonObject.getString("image") != null) {
                      img = jsonObject.getString("image");
