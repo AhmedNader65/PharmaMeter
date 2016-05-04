@@ -14,7 +14,7 @@
        android:layout_marginLeft="8dp"
        android:layout_marginTop="8dp"
        android:id="@+id/image_icon"
-       android:src="@drawable/contact"
+       android:src="@drawable/contact_home"
 
        />
 
