@@ -406,7 +406,7 @@ public class Home extends Activity {
 
             JSONArray jsonArray = new JSONArray(s);
             JSONObject jsonObject = new JSONObject();
-
+              String img = null;
               String[] result = null;
 
              for(int i =0 ; i<jsonArray.length() ; i++)
@@ -415,8 +415,11 @@ public class Home extends Activity {
                  listData.setMedicine(jsonObject.getString("id"));
                  listData.setPharamcy(jsonObject.getString("pharamcy_id"));
                  listData.setDate(jsonObject.getString("end_date"));
-                 String img = jsonObject.getString("image");
-                 listData.setImage(getImageFromHash(img));
+                 if(jsonObject.getString("image") != null) {
+                     img = jsonObject.getString("image");
+                     listData.setImage(getImageFromHash(img));
+                 }
+
                  data.add(listData);
              }
 
@@ -443,7 +446,7 @@ public class Home extends Activity {
             for(int i = 0 ; i< data.size() ; i++)
             {
                 ListData item = new ListData();
-                custom.add(data);
+                custom.add(data.get(i));
                 Log.e("bitmapPOST", "bitmap8");
             }
         }
