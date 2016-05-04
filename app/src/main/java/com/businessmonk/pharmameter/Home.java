@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,16 +16,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.ShareActionProvider;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,12 +40,16 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class Home extends Activity {
-    ArrayList<Bitmap> ImageBitmap = new ArrayList<Bitmap>();
-    ArrayList<String> pharamcyName = new ArrayList<>();
-    ArrayList<String> firstPrice = new ArrayList<>();
-    ArrayList<String> secondPrice = new ArrayList<>();
-    ArrayList<String> medNames = new ArrayList<>();
-    ArrayList<String> date = new ArrayList<>();
+   public ArrayList<Bitmap> ImageBitmap = new ArrayList<Bitmap>();
+    public ArrayList<String> pharamcyName = new ArrayList<>();
+    public ArrayList<String> firstPrice = new ArrayList<>();
+    public ArrayList<String> secondPrice = new ArrayList<>();
+    public ArrayList<String> medNames = new ArrayList<>();
+    public ArrayList<String> date = new ArrayList<>();
+    public ArrayList<ListData> data = new ArrayList<>();
+    customAdapter custom = new customAdapter(this,R.id.listViewItem , data );
+   ;
+
 
     TinyDB tinyDB;
     ImageButton profile_btn, emergencies_btn, nearby_btn ,invite_btn,order_btn,history_btn, reminder_btn,tip_btn,contact_btn;
@@ -64,6 +73,21 @@ public class Home extends Activity {
         tab2.setIndicator("News");
         tab2.setContent(R.id.tab2);
         tabHost.addTab(tab2);
+
+        ListView promo = (ListView)findViewById(R.id.tab1);
+
+                promo.setAdapter(custom);
+        promo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
+
+            }
+        });
+
+
+
         ImageButton menu_btn = (ImageButton) findViewById(R.id.menu_button);
         menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,6 +170,14 @@ public class Home extends Activity {
                 startActivity(Intent.createChooser(sharingIntent,  "Where to invite"));;
             }
         });
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getPromation p = new getPromation();
+        p.execute();
     }
 
     @Override
@@ -294,9 +326,10 @@ public class Home extends Activity {
  }
 
 
-    public class hgetPromation extends AsyncTask<String,Void,String> {
+    public class getPromation extends AsyncTask<String,Void,Void> {
+
         @Override
-        protected String doInBackground(String... strings) {
+        protected Void doInBackground(String... strings) {
             String response = "";
             URL url = null;
             try {
@@ -353,22 +386,65 @@ public class Home extends Activity {
 
             }
 
-
             Log.e("eee" , response);
-            return response;
+            try {
+                getDataFromJson(response);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            return null;
+        }
 
 
 
+        public void getDataFromJson(String s) throws JSONException {
+
+
+            JSONArray jsonArray = new JSONArray(s);
+            JSONObject jsonObject = new JSONObject();
+
+              String[] result = null;
+
+             for(int i =0 ; i<jsonArray.length() ; i++)
+             {
+                 ListData listData = new ListData();
+                 listData.setMedicine(jsonObject.getString("id"));
+                 listData.setPharamcy(jsonObject.getString("pharamcy_id"));
+                 listData.setDate(jsonObject.getString("end_date"));
+                 String img = jsonObject.getString("image");
+                 listData.setImage(getImageFromHash(img));
+                 data.add(listData);
+             }
 
         }
+
+
+
+
+
+        // get image from Hash
+
+        public Bitmap getImageFromHash(String Hash)
+        {
+            byte[] b = Hash.getBytes();
+             Bitmap bitmap = BitmapFactory.decodeByteArray(b , 0 , b.length);
+
+            return bitmap;
+        }
+
 
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            for(int i = 0 ; i< data.size() ; i++)
+            {
+                ListData item = new ListData();
+                custom.add(data);
+                Log.e("bitmapPOST", "bitmap8");
+            }
         }
-
     }
 
 }
