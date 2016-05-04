@@ -3,6 +3,8 @@
     package="com.businessmonk.pharmameter">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -22,7 +24,9 @@
             android:value="@string/facebook_app_id" />
 
         <activity android:name=".MainActivity" />
-        <activity android:name=".Login">
+        <activity android:name=".Login"
+            android:windowSoftInputMode="stateHidden"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,7 +35,9 @@
         </activity>
         <activity android:name=".Signup" />
         <activity android:name=".Home" />
-        <activity android:name=".Profile" />
+        <activity android:name=".Profile"
+            android:windowSoftInputMode="stateHidden"
+            ></activity>
         <activity android:name=".Emergencies" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

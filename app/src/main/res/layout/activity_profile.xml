@@ -13,11 +13,13 @@ android:layout_height="match_parent" >
     android:background="@drawable/login_background"
     tools:context="com.businessmonk.pharmameter.Profile">
     <com.businessmonk.pharmameter.CircularImageView
+        android:focusable="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:id="@+id/profile_pic_circular"
         android:layout_width="200dp"
         android:layout_height="200dp"
+        android:onClick="profile_pic"
         android:src="@drawable/profile_pic"/>
     <LinearLayout
         android:id="@+id/view_sec"
@@ -236,14 +238,7 @@ android:layout_height="match_parent" >
         android:src="@drawable/edit1"
         android:layout_below="@+id/phone_profile_edit"
         android:layout_toRightOf="@+id/birth_date_profile_edit" />
-    <ImageView
-        android:id="@+id/birth_confirm_icon"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:src="@drawable/confirm1"
-        android:visibility="invisible"
-        android:layout_below="@+id/phone_profile_edit"
-        android:layout_toRightOf="@+id/birth_date_profile_edit" />
+
     <TextView
         android:layout_marginTop="15dp"
         android:layout_marginLeft="20dp"
@@ -353,8 +348,23 @@ android:layout_height="match_parent" >
         android:layout_below="@+id/don"
         android:hint="@string/type_number_of_them" />
 
-
-
+    <ImageView
+        android:id="@+id/child_edit_icon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/edit1"
+        android:layout_below="@+id/don"
+        android:layout_alignLeft="@+id/birth_edit_icon"
+        android:layout_alignStart="@+id/birth_edit_icon" />
+    <ImageView
+        android:id="@+id/child_confirm_icon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/confirm1"
+        android:visibility="invisible"
+        android:layout_below="@+id/don"
+        android:layout_alignLeft="@+id/birth_edit_icon"
+        android:layout_alignStart="@+id/birth_edit_icon" />
     <ImageView
         android:id="@+id/pregnantdate_edit_icon"
         android:layout_width="25dp"
@@ -363,7 +373,7 @@ android:layout_height="match_parent" >
         android:layout_below="@+id/pregnant"
         android:layout_alignLeft="@+id/birth_edit_icon"
         android:layout_alignStart="@+id/birth_edit_icon" />
-    <ImageView
+<ImageView
         android:id="@+id/pregnantdate_confirm_icon"
         android:layout_width="25dp"
         android:layout_height="25dp"

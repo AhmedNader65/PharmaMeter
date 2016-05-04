@@ -46,7 +46,7 @@ public class Login extends Activity {
         setContentView(R.layout.activity_login);
         tinyDB = new TinyDB(getApplicationContext());
         Window window = this.getWindow();
-        tinyDB.putString("host","http://192.168.1.3:8080/api/");
+        tinyDB.putString("host","http://192.168.1.10:8080/api/");
 // clear FLAG_TRANSLUCENT_STATUS flag:
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
@@ -83,18 +83,18 @@ public class Login extends Activity {
         startActivity(intent);
     }
     public Context mcontext ;
-
-    public void auto_log(String username_from_signup,String password_from_Signup,Context context){
-        this.userName = username_from_signup;
-        this.password = password_from_Signup;
-        this.mcontext = context;
-        tinyDB = new TinyDB(context);
-        auto_log = true;
-        Log.e("respon", userName);
-        Log.e("respon2", password);
-        httpReqPost req = new httpReqPost();
-        req.execute("login");
-    }
+//
+//    public void auto_log(String username_from_signup,String password_from_Signup,Context context){
+//        this.userName = username_from_signup;
+//        this.password = password_from_Signup;
+//        this.mcontext = context;
+//        tinyDB = new TinyDB(context);
+//        auto_log = true;
+//        Log.e("respon", userName);
+//        Log.e("respon2", password);
+//        httpReqPost req = new httpReqPost();
+//        req.execute("login");
+//    }
 
     public String[] parsing(String res) throws JSONException {
             String[] x = new String[2];
@@ -176,10 +176,7 @@ public class Login extends Activity {
             Log.e("resp",strings);
             if(strings!=""){
             try {
-                String tok = parsing(strings)[0];
-                String uid = parsing(strings)[1];
-                Log.e("profile2",tok);
-                Log.e("profile2",uid);
+                parsing(strings);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

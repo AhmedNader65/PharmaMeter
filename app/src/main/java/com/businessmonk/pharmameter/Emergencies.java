@@ -30,6 +30,10 @@ import java.util.ArrayList;
 public class Emergencies extends AppCompatActivity {
     TinyDB tinyDB ;
     ListView emergencies_listview ;
+    String hospital_name,hospital_phone,hospital_address,hospital_startTime,hospital_endTime;
+    double lat, lng;
+    ArrayList<String> hospitalsName, hospitalsId ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +95,8 @@ public class Emergencies extends AppCompatActivity {
                 String line;
                 BufferedReader br = null;
                 String x = conn.getHeaderField("Authorization");
-                String[] xx= x.split(" ");
+                String[] xx = x.split(" ");
+
                 tinyDB.putString("token",xx[1]);
                 try {
                     br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -107,6 +112,12 @@ public class Emergencies extends AppCompatActivity {
                     e1.printStackTrace();
                 }
             } else {
+
+
+                String x = conn.getHeaderField("Authorization");
+                String[] xx = x.split(" ");
+
+                tinyDB.putString("token",xx[1]);
                 response = "";
 
             }
@@ -127,8 +138,7 @@ public class Emergencies extends AppCompatActivity {
         }
 
     }
-    ArrayList<String> hospitalsName ;
-    ArrayList<String> hospitalsId ;
+
     boolean dialog = false;
     public void parsing(String res) throws JSONException {
         Log.e("jsonString",res);
@@ -157,22 +167,34 @@ public class Emergencies extends AppCompatActivity {
         });
 
     }else{
+            Log.e("loooooong",res);
             JSONObject jsonObject = new JSONObject(res);
-            String hospital_name = jsonObject.getString("hospital_name");
-            String hospital_address = jsonObject.getString("address");
-            String hospital_phone = jsonObject.getString("phone_number");
-            String hospital_startTime = jsonObject.getString("start_time");
-            String hospital_endTime = jsonObject.getString("end_time");
+            hospital_name= jsonObject.getString("hospital_name");
+            hospital_address = jsonObject.getString("address");
+            hospital_phone = jsonObject.getString("phone_number");
+            hospital_startTime = jsonObject.getString("start_time").substring(11,16);
+            hospital_endTime = jsonObject.getString("end_time").substring(11,16);
+             lat  = jsonObject.getDouble("lat");
+             lng  = jsonObject.getDouble("lng");
+            Log.e("laaaaaaaat", lat + "");
+            Log.e("loooooong",lng+"");
 
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(Emergencies.this);
             alertDialog.setTitle(hospital_name);
             alertDialog.setMessage("Address : "+hospital_address+"\n"+
                     "Phone : "+hospital_phone+"\n"+
-                    "Start time : "+hospital_startTime.substring(0,10)+"\n"+
-                    "End time : "+hospital_endTime.substring(0,10));
+                    "Start time : "+hospital_startTime+"\n"+
+                    "End time : "+hospital_endTime);
             alertDialog.setPositiveButton("LOCATION", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     Intent intent  = new Intent(Emergencies.this,MapsActivity.class);
+                    intent.putExtra("lat",lat);
+                    intent.putExtra("lng",lng);
+                    intent.putExtra("name",hospital_name);
+                    intent.putExtra("address",hospital_address);
+                    intent.putExtra("phone",hospital_phone);
+                    intent.putExtra("startTime",hospital_startTime);
+                    intent.putExtra("endTime",hospital_endTime);
                     startActivity(intent);
                 }
             });

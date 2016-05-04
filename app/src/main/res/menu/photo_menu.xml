@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.businessmonk.myapplication.MainActivity">
+    <item
+        android:id="@+id/action_remove"
+        android:orderInCategory="3"
+        android:title="@string/action_delete_photo"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_change"
+        android:orderInCategory="2"
+        android:title="@string/action_change"
+        app:showAsAction="never" />
+
+</menu>
