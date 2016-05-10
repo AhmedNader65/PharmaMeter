@@ -27,7 +27,7 @@ protected String doInBackground(String... strings) {
     URL url = null;
     String tok = strings[0];
         try {
-        url = new URL("http://192.168.1.5:8080/api/test?token="+tok);
+        url = new URL("http://192.168.1.10:8080/api/test?token="+tok);
         Log.e("respon",url.toString());
         } catch (MalformedURLException e) {
         e.printStackTrace();

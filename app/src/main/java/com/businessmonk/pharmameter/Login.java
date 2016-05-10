@@ -46,11 +46,11 @@ public class Login extends Activity {
         setContentView(R.layout.activity_login);
         tinyDB = new TinyDB(getApplicationContext());
         Window window = this.getWindow();
-        tinyDB.putString("host","http://192.168.1.10:8080/api/");
-// clear FLAG_TRANSLUCENT_STATUS flag:
+        tinyDB.putString("host","http://192.168.1.25:8080/api/");
+        // clear FLAG_TRANSLUCENT_STATUS flag:
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
-// add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
 // finally change the color

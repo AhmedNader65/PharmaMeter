@@ -1,15 +1,11 @@
 package com.businessmonk.pharmameter;
 
-import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,12 +17,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ShareActionProvider;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -126,8 +120,8 @@ public class Home extends Activity {
 
 
 
-        getPromation p = new getPromation();
-        p.execute();
+//        getPromation p = new getPromation();
+//        p.execute();
         ImageButton menu_btn = (ImageButton) findViewById(R.id.menu_button);
         menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,8 +157,10 @@ public class Home extends Activity {
         order_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Home.this,Order.class);
+                Intent intent = new Intent(Home.this,Pharmacies.class);
+                intent.putExtra("flag","order");
                 startActivity(intent);
+
             }
         });
         reminder_btn =(ImageButton)findViewById(R.id.reminder_button);
@@ -187,7 +183,8 @@ public class Home extends Activity {
         contact_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Home.this,Contact.class);
+                Intent intent = new Intent(Home.this,Pharmacies.class);
+                intent.putExtra("flag","contact");
                 startActivity(intent);
             }
         });

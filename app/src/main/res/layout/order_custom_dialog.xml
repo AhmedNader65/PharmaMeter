@@ -1,0 +1,77 @@
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+        android:src="@drawable/login_background"
+        android:scaleType="fitXY"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignTop="@+id/activation_layout"
+        android:layout_alignBottom="@id/activation_layout"
+        android:layout_alignLeft="@id/activation_layout"
+        android:layout_alignRight="@id/activation_layout" />
+    <RelativeLayout
+        android:id="@+id/activation_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+<ImageView
+    android:id="@+id/image"
+    android:src="@drawable/order_dialog_icon"
+    android:layout_width="80dp"
+    android:layout_marginTop="40dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="10dp"
+    android:layout_height="80dp" />
+
+<TextView
+android:id="@+id/text"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:textColor="#000"
+    android:text="If this medicine not for you"
+    android:layout_alignTop="@+id/image"
+android:layout_toRightOf="@+id/image"
+    android:layout_marginTop="10dp"
+    />
+<CheckBox
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@+id/image"
+    android:id="@+id/forOthers"
+    android:text="Check this box"
+    android:layout_below="@+id/text"
+    />
+        <EditText
+            android:hint="Enter his/her Id"
+            android:visibility="gone"
+            android:id="@+id/otherId"
+            android:ems="7"
+            android:layout_alignLeft="@+id/forOthers"
+            android:layout_below="@+id/forOthers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/otherId"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+<Button
+android:id="@+id/dialogButtonOK"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text=" Add to List "
+    />
+<Button
+    android:id="@+id/indecation"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="See indication"
+    android:layout_toRightOf="@+id/dialogButtonOK"
+    />
+    </LinearLayout>
+</RelativeLayout>
+    </RelativeLayout>

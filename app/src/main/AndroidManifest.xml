@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.businessmonk.pharmameter">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -57,11 +59,12 @@
         <activity
             android:name=".Nearby"
             android:label="@string/title_activity_nearby" />
-        <activity android:name=".Order" />
+        <activity android:name=".Pharmacies" />
         <activity android:name=".History" />
         <activity android:name=".Reminder" />
         <activity android:name=".Tip" />
-        <activity android:name=".Contact"></activity>
+        <activity android:name=".Contact" />
+        <activity android:name=".Order"></activity>
     </application>
 
 </manifest>

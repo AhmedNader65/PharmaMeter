@@ -6,10 +6,15 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -33,7 +38,10 @@ public class Emergencies extends AppCompatActivity {
     String hospital_name,hospital_phone,hospital_address,hospital_startTime,hospital_endTime;
     double lat, lng;
     ArrayList<String> hospitalsName, hospitalsId ;
-
+    EditText search;
+    ArrayAdapter adapter;
+    ImageView search_icon;
+    boolean flag = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,9 +50,40 @@ public class Emergencies extends AppCompatActivity {
         tinyDB = new TinyDB(getApplicationContext());
         emergencies_listview = (ListView)findViewById(R.id.hospitals_list_view);
         TextView idPlace = (TextView) findViewById(R.id.id_place);
+        search = (EditText)findViewById(R.id.search);
+        search_icon = (ImageView) findViewById(R.id.imageView1);
+        search_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(flag){
+                    search.setVisibility(View.VISIBLE);
+                    flag = false;
+                }else{
+                    search.setVisibility(View.GONE);
+                    flag = true;
+                }
+            }
+        });
         idPlace.setText(tinyDB.getString("uid"));
+        search = (EditText)findViewById(R.id.search);
         httpReqGet getReq = new httpReqGet();
         getReq.execute();
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Emergencies.this.adapter.getFilter().filter(charSequence);
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
     public class httpReqGet extends AsyncTask<String,Void,String> {
 
@@ -154,7 +193,7 @@ public class Emergencies extends AppCompatActivity {
             hospitalsName.add(hospitalName);
               hospitalsId.add(hospitalId);
         }
-        ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,hospitalsName);
+         adapter = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,hospitalsName);
         emergencies_listview.setAdapter(adapter);
         emergencies_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

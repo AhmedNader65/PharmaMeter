@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<ImageView
+    android:layout_centerVertical="true"
+    android:id="@+id/product_pic"
+    android:layout_margin="10dp"
+    android:layout_width="60dp"
+    android:src="@drawable/cost"
+    android:layout_height="60dp" />
+    <LinearLayout
+        android:layout_centerVertical="true"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/product_pic"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/product_name"
+            android:layout_gravity="left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ansoleen"
+            android:textSize="13dp"
+            />
+        <TextView
+            android:layout_gravity="left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Click to see details"
+            android:textSize="13dp"
+            />
+    </LinearLayout>
+    <TextView
+        android:layout_alignParentBottom="true"
+        android:id="@+id/product_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="27 L.E"
+        android:textSize="15dp"
+        android:textColor="@color/logoColor"
+        android:layout_alignParentRight="true"
+        />
+</RelativeLayout>
