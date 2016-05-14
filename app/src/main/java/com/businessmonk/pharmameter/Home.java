@@ -1,6 +1,8 @@
 package com.businessmonk.pharmameter;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,6 +35,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Home extends Activity {
    public ArrayList<Bitmap> ImageBitmap;
@@ -120,8 +123,8 @@ public class Home extends Activity {
 
 
 
-//        getPromation p = new getPromation();
-//        p.execute();
+        getPromation p = new getPromation();
+        p.execute();
         ImageButton menu_btn = (ImageButton) findViewById(R.id.menu_button);
         menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,6 +210,22 @@ public class Home extends Activity {
                 startActivity(Intent.createChooser(sharingIntent,  "Where to invite"));;
             }
         });
+        /////////////////////////////////////////////
+        ////////////////////////////////////////////
+        ////////////////////////////////////////////
+        //        NOTIFICATION
+        ///////////////////////////////////////////
+        ///////////////////////////////////////////
+        //////////////////////////////////////////
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 18);
+        calendar.set(Calendar.MINUTE, 30);
+        calendar.set(Calendar.SECOND, 0);
+        Intent intent1 = new Intent(Home.this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(Home.this, 0,intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) Home.this.getSystemService(Home.this.ALARM_SERVICE);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
     }
 
 
@@ -376,7 +395,7 @@ public class Home extends Activity {
             String response = "";
             URL url = null;
             try {
-                url = new URL(tinyDB.getString("host")+"promotions/"+"?token="+tinyDB.getString("token"));
+                url = new URL(tinyDB.getString("host")+"promotions");
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -404,11 +423,6 @@ public class Home extends Activity {
             }
             if (responseCode == HttpURLConnection.HTTP_OK) {
 
-
-                String x = conn.getHeaderField("Authorization");
-                String[] xx = x.split(" ");
-
-                tinyDB.putString("token",xx[1]);
                 String line;
                 BufferedReader br = null;
                 try {

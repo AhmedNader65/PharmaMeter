@@ -1,18 +1,20 @@
 package com.businessmonk.pharmameter;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,54 +27,48 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Tip extends AppCompatActivity {
-    TinyDB tinyDB;
-    String image, head, body;
-    TextView bodyView, headView;
-    ImageView tip_img;
-    getTip getTipclass;
+/**
+ * Created by ahmed on 11/05/16.
+ */
+public class AlarmReceiver  extends BroadcastReceiver {
+
+    Context mContext;
+    NotificationManager notificationManager;
+    PendingIntent pendingIntent;
+    Uri alarmSound;
+    long when;
+    TinyDB tinyDB ;
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
     public static final String MyPREFERENCES = "MyPrefs" ;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.custom_tip_navbar);
-        Log.e("hiiiiiiii","hiiii");
-        sharedPref = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+    public void onReceive(Context context, Intent intent) {
+        sharedPref = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         editor = sharedPref.edit();
-        tinyDB = new TinyDB(getApplicationContext());
-        bodyView = (TextView) findViewById(R.id.body);
-        headView = (TextView) findViewById(R.id.head);
-        tip_img = (ImageView) findViewById(R.id.tip_img);
-        String body =sharedPref.getString("body","b");
-        String head =sharedPref.getString("head","b");
-        String img =sharedPref.getString("image","b");
-        Log.e("hiiiiiiii",body);
-        if(body.length()<2){
-            Log.e("hggh","Hghg");
-            getTipss g = new getTipss();
-            g.execute();
-        }else{
-            Log.e("hggh","higigi");
+        when = System.currentTimeMillis();
+        tinyDB = new TinyDB(context);
+        this.mContext = context;
+        notificationManager = (NotificationManager) context
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        Intent notificationIntent = new Intent(context, Order.class);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        pendingIntent = PendingIntent.getActivity(context, 0,
+                notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        getTips getTips = new getTips();
+        getTips.execute();
 
-            bodyView.setText(body);
-            headView.setText(head);
-            tip_img.setImageBitmap(decode64(img));
-        }
     }
-
-
-    // get image from Hash
-
     public Bitmap decode64(String hash){
         hash = hash.substring(22);
-        Log.e("has",hash);
         byte[] decodedString = Base64.decode(hash, 0);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         return decodedByte;
     }
-    public class getTipss extends AsyncTask<String, Void, String> {
+    public static String head;
+    public static String body;
+    public static String image;
+    public class getTips extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... strings) {
@@ -156,13 +152,17 @@ public class Tip extends AppCompatActivity {
         head = jsonObject.getString("head");
         body = jsonObject.getString("body");
         image = jsonObject.getString("image");
+
+        NotificationCompat.Builder mNotifyBuilder = new NotificationCompat.Builder(
+                mContext).setLargeIcon(decode64(image))
+                .setContentTitle(head)
+                .setContentText(body).setSound(alarmSound)
+                .setAutoCancel(true).setWhen(when)
+                .setContentIntent(pendingIntent)
+                .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000});
+        notificationManager.notify(1, mNotifyBuilder.build());
         editor.putString("head",head);
         editor.putString("body",body);
         editor.putString("image",image);
-        editor.commit();
-        bodyView.setText(body);
-        headView.setText(head);
-        tip_img.setImageBitmap(decode64(image));
     }
-
 }
