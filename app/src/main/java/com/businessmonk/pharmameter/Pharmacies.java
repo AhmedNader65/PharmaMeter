@@ -51,6 +51,7 @@ public class Pharmacies extends AppCompatActivity {
                     intent2 = new Intent(Pharmacies.this,Order.class);
                 }else{
                     intent2 = new Intent(Pharmacies.this,Contact.class);
+                    intent2.putExtra("pharmacy_id",pharmacies_id.get(i));
                 }
                 startActivity(intent2);
             }

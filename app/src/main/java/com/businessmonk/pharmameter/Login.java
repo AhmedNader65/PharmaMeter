@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
-import com.facebook.FacebookSdk;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,11 +41,11 @@ public class Login extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
+
         setContentView(R.layout.activity_login);
         tinyDB = new TinyDB(getApplicationContext());
         Window window = this.getWindow();
-        tinyDB.putString("host","http://192.168.1.3:8080/api/");
+        tinyDB.putString("host","http://192.168.43.74:8080/api/");
         // clear FLAG_TRANSLUCENT_STATUS flag:
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
