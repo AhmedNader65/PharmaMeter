@@ -45,7 +45,8 @@ public class Login extends Activity {
         setContentView(R.layout.activity_login);
         tinyDB = new TinyDB(getApplicationContext());
         Window window = this.getWindow();
-        tinyDB.putString("host","http://192.168.43.74:8080/api/");
+//        tinyDB.putString("host","http://192.168.43.74:8080/api/");
+        tinyDB.putString("host","http://10.9.52.102:8080/api/");
         // clear FLAG_TRANSLUCENT_STATUS flag:
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
