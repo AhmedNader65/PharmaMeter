@@ -38,18 +38,24 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Home extends Activity {
+    public ArrayList<String> id;
+    public ArrayList<String> Product_id;
    public ArrayList<Bitmap> ImageBitmap;
-    public ArrayList<String> pharamcyName;
-    public ArrayList<String> firstPrice ;
-    public ArrayList<String> secondPrice;
-    public ArrayList<String> medNames;
+    public ArrayList<String> pharamcyId;
     public ArrayList<String> date;
-    public ArrayList<ListData> data;
     public ArrayList<String> head;
+    public ArrayList<String> body;
+    public ArrayList<Bitmap> ImageBitmap2;
+    public ArrayList<String> pharamcyId2;
+    public ArrayList<String> date2;
+    public ArrayList<String> head2;
+    public ArrayList<String> id2;
+    public ArrayList<String> body2;
     customAdapter custom;
-   ;
+    customAdapter custom2;
 
-
+    ListView news;
+    ListView promo;
     TinyDB tinyDB;
     ImageButton profile_btn, emergencies_btn, nearby_btn ,invite_btn,order_btn,history_btn, reminder_btn,tip_btn,contact_btn;
     private ShareActionProvider mShareActionProvider;
@@ -57,16 +63,22 @@ public class Home extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_custom_actionbar);
-        data = new ArrayList<>();
+        body = new ArrayList<>();
         date = new ArrayList<>();
+        date2 = new ArrayList<>();
         head =  new ArrayList<>();
-        medNames = new ArrayList<>();
-        secondPrice = new ArrayList<>();
-        firstPrice = new ArrayList<>();
-        pharamcyName = new ArrayList<>();
+        head2 =  new ArrayList<>();
+        pharamcyId= new ArrayList<>();
+        Product_id= new ArrayList<>();
         ImageBitmap= new ArrayList<Bitmap>();
+        ImageBitmap2= new ArrayList<Bitmap>();
+        pharamcyId2 = new ArrayList<String>();
+        id2 = new ArrayList<String>();
+        id = new ArrayList<String>();
+        body2 = new ArrayList<String>();
         TabHost tabHost = (TabHost) findViewById(R.id.mytabhost);
-        custom = new customAdapter(this,R.id.listViewItem , data );
+        //custom = new customAdapter(this,R.id.listViewItem , data );
+
         tabHost.setup();
         tinyDB = new TinyDB(getApplicationContext());
         TextView idPlace = (TextView) findViewById(R.id.id_place);
@@ -82,9 +94,9 @@ public class Home extends Activity {
         tab2.setContent(R.id.tab2);
         tabHost.addTab(tab2);
 
-        ListView promo = (ListView)findViewById(R.id.tab1);
+        promo = (ListView)findViewById(R.id.tab1);
+         news = (ListView)findViewById(R.id.tab2);
 
-                promo.setAdapter(custom);
         promo.setOnTouchListener(new ListView.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -106,25 +118,34 @@ public class Home extends Activity {
                 return true;
             }
         });
-        promo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        news.setOnTouchListener(new ListView.OnTouchListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
 
-            Intent in = new Intent();
-                ListData ll = new ListData();
-                in.putExtra("med_pharamcy" , ll.getPharamcy(i));
-                in.putExtra("med_name", ll.getMedicine(i));
-                in.putExtra("expierd" , ll.getDate(i));
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
 
-                startActivity(in);
-
+                // Handle ListView touch events.
+                v.onTouchEvent(event);
+                return true;
             }
         });
 
 
-
-        getPromation p = new getPromation();
+        getPromotion p = new getPromotion();
         p.execute();
+
+        getNews n = new getNews();
+        n.execute();
         ImageButton menu_btn = (ImageButton) findViewById(R.id.menu_button);
         menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -253,145 +274,167 @@ public class Home extends Activity {
 
 
 
+    public class customAdapter extends ArrayAdapter
 
-    public class ListData {
-
-        //getBitmap
-
-        public void setImage(Bitmap img)
-        {
-            ImageBitmap.add(img);
+    {
+        Activity mContext;
+        ArrayList<String> mBody;
+        ArrayList<Bitmap> mImg;
+        int res;
+        public customAdapter(Activity context, int resource , ArrayList<String> body,ArrayList<Bitmap> img) {
+            super(context, resource);
+            mContext = context;
+            res = resource;
+            mBody = body;
+            mImg = img;
         }
 
-        public Bitmap getImage(int postion)
-        {
-            return ImageBitmap.get(postion);
+        @Override
+        public int getCount() {
+            return mBody.size();
         }
 
+        public View getView(int position, View view, ViewGroup parent) {
 
-//pharamcy
+            LayoutInflater inflater=mContext.getLayoutInflater();
+            View rowView=inflater.inflate(R.layout.listview_item, null,true);
 
-        public void setPharamcy(String n)
-        {
-            pharamcyName.add(n);
-        }
-
-        public String getPharamcy(int postion)
-        {
-            return pharamcyName.get(postion);
-        }
-
-
-// medicine name
-
-        public void setMedicine(String n)
-        {
-            medNames.add(n);
-        }
-
-        public String getMedicine(int postion)
-        {
-            return medNames.get(postion);
-        }
-
-
-//first price
-
-        public void setPFirst(String n)
-        {
-            firstPrice.add(n);
-        }
-
-        public String getFirst(int postion)
-        {
-            return firstPrice.get(postion);
-        }
-
-
-        //second price
-
-        public void setsecond(String n)
-        {
-
-            secondPrice.add(n);
-        }
-
-        public String getsecond(int postion)
-        {
-            return secondPrice.get(postion);
-        }
-
-
-
-        public void setDate(String n)
-        {
-            date.add(n);
-        }
-
-        public String getDate(int postion)
-        {
-            return date.get(postion);
-        }
-
-
-        public void setHead(String h)
-        {
-            head.add(h);
-        }
-
-        public String getHead(int postion)
-        {
-            return head.get(postion);
-        }
-    }
-
-
- public class customAdapter extends ArrayAdapter
-
- {
-      Activity mContext;
-      int res;
-      ArrayList<ListData> mData;
-
-     public customAdapter(Activity context, int resource , ArrayList<ListData> data) {
-         super(context, resource);
-         mContext = context;
-         res = resource;
-         mData = data;
-     }
-
-
-     public View getView(int position,View view,ViewGroup parent) {
-
-         LayoutInflater inflater=mContext.getLayoutInflater();
-         View rowView=inflater.inflate(R.layout.listview_item, null,true);
-
-         TextView med_name = (TextView) rowView.findViewById(R.id.med_name);
-         ImageView imageView = (ImageView) rowView.findViewById(R.id.image_icon);
+            TextView med_name = (TextView) rowView.findViewById(R.id.med_name);
+            ImageView imageView = (ImageView) rowView.findViewById(R.id.image_icon);
 //         TextView pharamcr_name = (TextView) rowView.findViewById(R.id.med_phamacy);
 //         TextView date = (TextView) rowView.findViewById(R.id.expired);
 
-
-         ListData listData = mData.get(position);
-
-         med_name.setText(listData.getHead(position));
-         if(listData.getImage(position) != null) {
-             imageView.setImageBitmap(listData.getImage(position));
-         }
+            med_name.setText(mBody.get(position));
+            if(mImg.get(position) != null) {
+                imageView.setImageBitmap(mImg.get(position));
+            }
 //         pharamcr_name.setText(listData.getPharamcy(position));
 //         date.setText(listData.getDate(position));
 
-         return rowView;
+            return rowView;
 
-     };
+        };
 
- }
+    }
 
-
-    public class getPromation extends AsyncTask<String,Void,Void> {
+    public class getNews extends AsyncTask<String, Void, String> {
 
         @Override
-        protected Void doInBackground(String... strings) {
+        protected String doInBackground(String... strings) {
+            String response = "";
+            URL url = null;
+            try {
+                url = new URL(tinyDB.getString("host")+"news");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+
+            HttpURLConnection conn = null;
+            try {
+                conn = (HttpURLConnection) url.openConnection();
+
+                conn.setRequestMethod("GET");
+                conn.setDoInput(true);
+                conn.setUseCaches(false);
+                conn.setRequestMethod("GET");
+                conn.setConnectTimeout(20000);
+                conn.addRequestProperty("Accept", "application/json");
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            int responseCode =0;
+            try {
+                responseCode = conn.getResponseCode();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                String line;
+                BufferedReader br = null;
+                try {
+                    br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+                try {
+                    while ((line = br.readLine()) != null) {
+                        response += line;
+                    }
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            } else {
+                response = "";
+
+            }
+
+            Log.e("eee" , response);
+
+
+            return response;
+        }
+
+
+
+        public void getDataFromJson(String s) throws JSONException {
+
+
+            JSONArray jsonArray = new JSONArray(s);
+            String img = null;
+            Log.e("json2",jsonArray.length()+"");
+            for(int i =0 ; i<jsonArray.length() ; i++)
+            {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                pharamcyId2.add(jsonObject.getString("pharmacy_id"));
+                head2.add(jsonObject.getString("head"));
+                id2.add(jsonObject.getString("id"));
+                body2.add(jsonObject.getString("body"));
+                if(jsonObject.getString("image") != null) {
+                    img = jsonObject.getString("image");
+                    ImageBitmap2.add(getImageFromHash(img));
+                }
+            }
+            for(int i = 0 ; i<head2.size();i++){
+                Log.e("head2",head2.get(i));
+            }
+            custom2 = new customAdapter(Home.this,R.id.listViewItem , head2,ImageBitmap2 );
+
+            news.setAdapter(custom2);
+            Log.e("hiiii","hiiiii");
+
+        }
+
+
+        // get image from Hash
+
+        public Bitmap getImageFromHash(String Hash)
+        {
+            byte[] b = Hash.getBytes();
+            Bitmap bitmap = BitmapFactory.decodeByteArray(b , 0 , b.length);
+            return bitmap;
+        }
+
+
+        @Override
+        protected void onPostExecute(String aVoid) {
+            super.onPostExecute(aVoid);
+
+            try {
+                getDataFromJson(aVoid);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+    public class getPromotion extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
             String response = "";
             URL url = null;
             try {
@@ -444,65 +487,64 @@ public class Home extends Activity {
             }
 
             Log.e("eee" , response);
+
+
+            return response;
+        }
+
+
+
+
+
+
+
+        @Override
+        protected void onPostExecute(String aVoid) {
+            super.onPostExecute(aVoid);
+
             try {
-                getDataFromJson(response);
+                getDataFromJson(aVoid);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-
-            return null;
         }
+    }
+
+    public void getDataFromJson(String s) throws JSONException {
 
 
-
-        public void getDataFromJson(String s) throws JSONException {
-
-
-            JSONArray jsonArray = new JSONArray(s);
-              String img = null;
-              String[] result = null;
-            Log.e("json",jsonArray.length()+"");
-             for(int i =0 ; i<jsonArray.length() ; i++)
-             {
-                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                 ListData listData = new ListData();
-                 listData.setMedicine(jsonObject.getString("id"));
-                 listData.setPharamcy(jsonObject.getString("pharmacy_id"));
-                 listData.setDate(jsonObject.getString("end_date"));
-                 listData.setHead(jsonObject.getString("head"));
-                 if(jsonObject.getString("image") != null) {
-                     img = jsonObject.getString("image");
-                     listData.setImage(getImageFromHash(img));
-                 }
-
-                 data.add(listData);
-             }
-
-        }
-
-
-        // get image from Hash
-
-        public Bitmap getImageFromHash(String Hash)
+        JSONArray jsonArray = new JSONArray(s);
+        String img = null;
+        Log.e("json2",jsonArray.length()+"");
+        for(int i =0 ; i<jsonArray.length() ; i++)
         {
-            byte[] b = Hash.getBytes();
-             Bitmap bitmap = BitmapFactory.decodeByteArray(b , 0 , b.length);
-
-            return bitmap;
-        }
-
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            for(int i = 0 ; i< data.size() ; i++)
-            {
-                ListData item = new ListData();
-                custom.add(data.get(i));
-                Log.e("bitmapPOST", "bitmap8");
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            pharamcyId.add(jsonObject.getString("pharmacy_id"));
+            Product_id.add(jsonObject.getString("product_id"));
+            head.add(jsonObject.getString("head"));
+            id.add(jsonObject.getString("id"));
+            body.add(jsonObject.getString("body"));
+            date.add(jsonObject.getString("end_date"));
+            if(jsonObject.getString("image") != null) {
+                img = jsonObject.getString("image");
+                ImageBitmap.add(getImageFromHash(img));
             }
         }
+
+        custom = new customAdapter(Home.this,R.id.listViewItem , head,ImageBitmap );
+
+        promo.setAdapter(custom);
+        Log.e("hiiii","hiiiii");
+
+    }
+    // get image from Hash
+
+    public Bitmap getImageFromHash(String Hash)
+    {
+        byte[] b = Hash.getBytes();
+        Bitmap bitmap = BitmapFactory.decodeByteArray(b , 0 , b.length);
+        return bitmap;
     }
 
 }

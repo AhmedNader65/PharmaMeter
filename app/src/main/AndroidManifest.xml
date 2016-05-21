@@ -2,10 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.businessmonk.pharmameter">
 
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <!-- Register the Alarm Receiver -->
-    <receiver android:name="com.businessmonk.pharmameter.AlarmReceiver"/>
+    <receiver android:name=".AlarmReceiver" />
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -67,7 +68,8 @@
         <activity android:name=".Reminder" />
         <activity android:name=".Tip" />
         <activity android:name=".Contact" />
-        <activity android:name=".Order"></activity>
+        <activity android:name=".Order" />
+        <activity android:name=".Add_medicine"></activity>
     </application>
 
 </manifest>

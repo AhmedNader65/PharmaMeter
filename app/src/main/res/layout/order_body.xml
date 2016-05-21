@@ -66,10 +66,13 @@
                 android:layout_weight=".5"
                 >
             <Button
+
+                android:id="@+id/order_btn"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Order"
+            android:background="@drawable/order_btn"
+                android:layout_marginBottom="5dp"
             />
             </LinearLayout>
         </LinearLayout>

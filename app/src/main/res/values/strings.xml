@@ -16,4 +16,11 @@
 
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_nearby">Map</string>
+    <string name="prompt">Frequency</string>
+    <string-array name="freq">
+        <item>Once a day</item>
+        <item>Twice a day</item>
+        <item>3 times a day</item>
+        <item>4 times a day</item>
+    </string-array>
 </resources>

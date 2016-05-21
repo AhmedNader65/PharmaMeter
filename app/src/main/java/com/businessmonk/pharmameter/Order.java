@@ -1,7 +1,11 @@
 package com.businessmonk.pharmameter;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -46,9 +51,12 @@ public class Order extends AppCompatActivity {
     ArrayList<String> ordered_products;
     ArrayList<String> ordered_id;
     ArrayList<String> ordered_indication;
+    ArrayList<String> for_user_id;
+    Button order_btn ;
     public static ArrayList<Double> ordered_prices;
     ListView products_list,ordered_list ;
     static TextView totPrice;
+    boolean flag= false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +64,7 @@ public class Order extends AppCompatActivity {
         products_list = (ListView)findViewById(R.id.products_list);
         ordered_list = (ListView)findViewById(R.id.ordered);
         totPrice = (TextView) findViewById(R.id.tot_price);
+        order_btn = (Button)findViewById(R.id.order_btn);
         totPrice.setText("0");
         tinyDB = new TinyDB(getApplicationContext());
         product_id = new ArrayList<>();
@@ -67,11 +76,29 @@ public class Order extends AppCompatActivity {
         ordered_id= new ArrayList<>();
         ordered_indication= new ArrayList<>();
         product_pic = new ArrayList<>();
+        for_user_id = new ArrayList<>();
         httpReqGet getpro = new httpReqGet();
         getpro.execute();
+        order_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new orderPost().execute();
+            }
+        });
     }
-    ///////////// GET PHARMACIES ///////////
+    ///////////// GET PRoducts ///////////
     public class httpReqGet extends AsyncTask<String, Void, String> {
+        ProgressDialog progDailog;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progDailog = new ProgressDialog(Order.this);
+            progDailog.setMessage("Loading...");
+            progDailog.setIndeterminate(false);
+            progDailog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progDailog.setCancelable(true);
+            progDailog.show();
+        }
 
         //String className;
         @Override
@@ -147,6 +174,7 @@ public class Order extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            progDailog.dismiss();
             Log.e("hiiii", s);
             try {
                 parsing(s);
@@ -198,8 +226,10 @@ public class Order extends AppCompatActivity {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                         if(notForMe.isChecked()==true){
+                            flag = true;
                             otherId.setVisibility(View.VISIBLE);
                         }else{
+                            flag = false;
                             otherId.setVisibility(View.GONE);
 
                         }
@@ -209,12 +239,18 @@ public class Order extends AppCompatActivity {
                 dialogButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dialog.dismiss();
+                        if(flag){
+                            for_user_id.add(otherId.getText().toString());
+                        }else{
+                            for_user_id.add(tinyDB.getString("uid"));
+                        }
+                        Log.e("put into id","ooo");
                         ordered_id.add(product_id.get(pos));
                         ordered_products.add(product_Ename.get(pos));
                         ordered_prices.add(Double.valueOf(product_price.get(pos)));
                         totPrice.setText(String.valueOf(calcPric(ordered_prices))+" L.E");
                         adapter2.notifyDataSetChanged();
+                        dialog.dismiss();
                     }
                 });
                 ind_btn.setOnClickListener(new View.OnClickListener() {
@@ -256,5 +292,109 @@ public class Order extends AppCompatActivity {
             sum +=x.get(i);
         }
         return sum;
+    }
+
+
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    ////////////////// POST ORDER ////////////////////////
+
+    public class orderPost extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... strings) {
+            String response = "";
+
+            URL url = null;
+
+            try {
+                url = new URL(tinyDB.getString("host") + "");
+                Log.e("hi", url.toString());
+            } catch (MalformedURLException e1) {
+                e1.printStackTrace();
+            }
+
+
+            HttpURLConnection conn = null;
+
+            try {
+                conn = (HttpURLConnection) url.openConnection();
+
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setUseCaches(false);
+                conn.setConnectTimeout(20000);
+                conn.setReadTimeout(10000);
+                conn.setDoOutput(true);
+                JSONObject json = new JSONObject();
+                json.put("pharmacy_id", getIntent().getStringExtra("pharmacy_id"));
+                json.put("user_create_id",tinyDB.getString("uid"));
+                JSONArray ar = new JSONArray();
+                for(int i = 0 ; i < for_user_id.size();i++) {
+                    JSONObject product = new JSONObject();
+                    product.put("for_user_id",for_user_id.get(i));
+                    product.put("product_id", ordered_products.get(i));
+                    ar.put(product);
+                };
+                json.put("products",ar);
+                String g = json.toString();
+                Log.e("hhhh",g);
+                Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter("username", "")
+                        .appendQueryParameter("password", "");
+
+                String query = builder.build().getEncodedQuery();
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = null;
+                writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+
+                writer.write(query);
+                writer.flush();
+                writer.close();
+                os.close();
+                int responseCode = 0;
+                responseCode = conn.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    String line;
+                    BufferedReader br = null;
+                    br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+                    while ((line = br.readLine()) != null) {
+                        response += line;
+                    }
+
+                } else {
+                    response = "";
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String strings) {
+            super.onPostExecute(strings);
+            Log.e("resp",strings);
+            if(strings!=""){
+                try {
+                    parsing(strings);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+//                Intent intent = new Intent(Login.this,Home.class);
+//                startActivity(intent);
+
+            }
+            else{
+                Toast.makeText(getApplicationContext(),"No Connection",Toast.LENGTH_LONG).show();
+            }
+        }
+
     }
 }

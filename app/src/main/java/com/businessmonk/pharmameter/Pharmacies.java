@@ -1,5 +1,6 @@
 package com.businessmonk.pharmameter;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -49,6 +50,7 @@ public class Pharmacies extends AppCompatActivity {
                 Log.e("flag",flag);
                 if(flag.contains("order")){
                     intent2 = new Intent(Pharmacies.this,Order.class);
+                    intent2.putExtra("pharmacy_id",pharmacies_id.get(i));
                 }else{
                     intent2 = new Intent(Pharmacies.this,Contact.class);
                     intent2.putExtra("pharmacy_id",pharmacies_id.get(i));
@@ -65,6 +67,18 @@ public class Pharmacies extends AppCompatActivity {
     public ArrayList<String> pharmacies_24 ;
     ///////////// GET PHARMACIES ///////////
     public class httpReqGet extends AsyncTask<String, Void, String> {
+        private ProgressDialog progDailog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progDailog = new ProgressDialog(Pharmacies.this);
+            progDailog.setMessage("Loading...");
+            progDailog.setIndeterminate(false);
+            progDailog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progDailog.setCancelable(true);
+            progDailog.show();
+        }
 
         //String className;
         @Override
@@ -135,6 +149,7 @@ public class Pharmacies extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            progDailog.dismiss();
             Log.e("hiiii", s);
             try {
                 if(s!=""){
