@@ -2,14 +2,17 @@ package com.businessmonk.pharmameter;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +35,8 @@ public class Pharmacies extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.custom_pharmacies);
         tinyDB = new TinyDB(getApplicationContext());
+        TextView idPlace = (TextView) findViewById(R.id.id_place);
+        idPlace.setText(tinyDB.getString("uid"));
         pharmacies = new ArrayList();
         pharmacies_id = new ArrayList();
         pharmacies_logo = new ArrayList();
@@ -56,6 +61,7 @@ public class Pharmacies extends AppCompatActivity {
                     intent2.putExtra("pharmacy_id",pharmacies_id.get(i));
                 }
                 startActivity(intent2);
+                Pharmacies.this.finish();
             }
         });
     }
@@ -176,8 +182,19 @@ public class Pharmacies extends AppCompatActivity {
             pharmacies_logo.add(jsonObject.getString("logo"));
             pharmacies_24.add(jsonObject.getString("is_24_7"));
         }
-        adapter = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,pharmacies);
-        pharmacies_listView.setAdapter(adapter);
+        adapter = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,pharmacies) {
 
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+
+                View view = super.getView(position, convertView, parent);
+                TextView text = (TextView) view.findViewById(android.R.id.text1);
+                 text.setTextColor(Color.BLACK);
+
+
+                return view;
+            }
+        };
+        pharmacies_listView.setAdapter(adapter);
     }
 }

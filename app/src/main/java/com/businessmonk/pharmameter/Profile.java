@@ -139,6 +139,7 @@ public class Profile extends AppCompatActivity implements PopupMenu.OnMenuItemCl
         if(tinyDB.getString("image")=="no"){
             profile_pic.setImageResource(R.drawable.profile_pic);
         }else {
+            Log.e("hhh","nniiii");
             profile_pic.setImageURI(Uri.parse(tinyDB.getString("image")));
         }
         /////////////////////////////////////////////
@@ -519,19 +520,30 @@ public class Profile extends AppCompatActivity implements PopupMenu.OnMenuItemCl
     ////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////
     public void parsing(String res) throws JSONException {
+        Log.e("info",res);
         JSONObject jsonObject = new JSONObject(res);
-        tinyDB.putString("realFirstName",jsonObject.getString("first_name"));
-        tinyDB.putString("realLastname",jsonObject.getString("last_name"));
-        tinyDB.putString("realAddress",jsonObject.getString("address"));
-        tinyDB.putString("realBirthDate",jsonObject.getString("birthdate"));
-        tinyDB.putString("realEmail",jsonObject.getString("email"));
-        tinyDB.putString("realMobile",jsonObject.getString("mobile_number"));
-        tinyDB.putString("realPhone",jsonObject.getString("phone_number"));
-        tinyDB.putString("realGender",jsonObject.getString("gender"));
-        tinyDB.putString("realArea",jsonObject.getString("area_id"));
-        tinyDB.putString("realIsPregnant",jsonObject.getString("is_pregnant"));
-        tinyDB.putString("realPregnantDate",jsonObject.getString("pregnancy_date"));
-        tinyDB.putString("realIsLact",jsonObject.getString("currently_lactating"));
+        tinyDB.putString("realFirstName",(jsonObject.getString("first_name").toString()=="null") ? "no Entry":jsonObject.getString("first_name"));
+        tinyDB.putString("realLastname",(jsonObject.getString("last_name").toString()=="null") ? "no Entry":jsonObject.getString("last_name"));
+        tinyDB.putString("realAddress",(jsonObject.getString("address").toString()=="null") ? "no Entry":jsonObject.getString("address"));
+        tinyDB.putString("realBirthDate",(jsonObject.getString("birthdate").toString()=="null") ? "no Entry":jsonObject.getString("birthdate"));
+        tinyDB.putString("realEmail",(jsonObject.getString("email").toString()=="null") ? "no Entry":jsonObject.getString("email"));
+        tinyDB.putString("realMobile",(jsonObject.getString("mobile_number").toString()=="null") ? "no Entry":jsonObject.getString("mobile_number"));
+        tinyDB.putString("realPhone",(jsonObject.getString("phone_number").toString()=="null") ? "no Entry":jsonObject.getString("phone_number"));
+        tinyDB.putString("realGender",(jsonObject.getString("gender").toString()=="null") ? "male":jsonObject.getString("gender"));
+        tinyDB.putString("realArea",(jsonObject.getString("area_id").toString()=="null") ? "no Entry":jsonObject.getString("area_id"));
+        tinyDB.putString("realIsPregnant",(jsonObject.getString("is_pregnant").toString()=="null") ? "false":jsonObject.getString("is_pregnant"));
+        tinyDB.putString("realPregnantDate",(jsonObject.getString("pregnancy_date").toString()=="null") ? "no Entry":jsonObject.getString("pregnancy_date"));
+        tinyDB.putString("realIsLact",(jsonObject.getString("currently_lactating").toString()=="null") ? "false":jsonObject.getString("currently_lactating"));
+        String a =jsonObject.getString("phone_number");
+        Log.e("dsds",a.toString());
+        if(a.toString()=="null"){
+            Log.e("phhhodsdsnnnnnnne","null yalla");
+        }
+
+        if(a.toString().equals("null")){
+            Log.e("ggfgf","hiii");
+        }
+
 
         emailEdit.setText(tinyDB.getString("realEmail"));
         phoneEdit.setText(tinyDB.getString("realPhone"));

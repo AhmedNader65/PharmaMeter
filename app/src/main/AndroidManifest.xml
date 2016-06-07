@@ -5,7 +5,7 @@
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <!-- Register the Alarm Receiver -->
-    <receiver android:name=".AlarmReceiver" />
+
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -70,6 +70,7 @@
         <activity android:name=".Contact" />
         <activity android:name=".Order" />
         <activity android:name=".Add_medicine"></activity>
+        <receiver android:name=".AlarmReceiver"/>
     </application>
 
 </manifest>

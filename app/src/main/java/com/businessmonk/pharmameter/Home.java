@@ -239,7 +239,7 @@ public class Home extends Activity {
         ///////////////////////////////////////////
         //////////////////////////////////////////
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 18);
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
         calendar.set(Calendar.MINUTE, 30);
         calendar.set(Calendar.SECOND, 0);
         Intent intent1 = new Intent(Home.this, AlarmReceiver.class);

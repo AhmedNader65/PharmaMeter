@@ -48,13 +48,6 @@ public class AlarmReceiver  extends BroadcastReceiver {
         when = System.currentTimeMillis();
         tinyDB = new TinyDB(context);
         this.mContext = context;
-        notificationManager = (NotificationManager) context
-                .getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent notificationIntent = new Intent(context, Order.class);
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        pendingIntent = PendingIntent.getActivity(context, 0,
-                notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         getTips getTips = new getTips();
         getTips.execute();
 
@@ -154,15 +147,31 @@ public class AlarmReceiver  extends BroadcastReceiver {
         image = jsonObject.getString("image");
 
         NotificationCompat.Builder mNotifyBuilder = new NotificationCompat.Builder(
-                mContext).setLargeIcon(decode64(image))
+                mContext).setSmallIcon(R.drawable.drugs)
                 .setContentTitle(head)
                 .setContentText(body).setSound(alarmSound)
                 .setAutoCancel(true).setWhen(when)
                 .setContentIntent(pendingIntent)
                 .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000});
-        notificationManager.notify(1, mNotifyBuilder.build());
         editor.putString("head",head);
         editor.putString("body",body);
         editor.putString("image",image);
+        Log.e("hi",head);
+        Log.e("hi",body);
+        Log.e("hi","noti");
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext);
+        mBuilder.setLargeIcon(decode64(image));
+        mBuilder.setContentTitle(head);
+        mBuilder.setContentText(body);
+        notificationManager = (NotificationManager) mContext
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        Intent notificationIntent = new Intent(mContext, Tip.class);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        pendingIntent = PendingIntent.getActivity(mContext, 0,
+                notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mNotifyBuilder.setContentIntent(pendingIntent);
+        notificationManager.notify(1, mNotifyBuilder.build());
+        alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
     }
 }

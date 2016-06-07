@@ -23,7 +23,7 @@ public class Reminder extends AppCompatActivity {
     public static ArrayList<String> interval;
     public static rem_customAdapter adapter;
     FloatingActionButton fab;
-
+    TinyDB tinyDB;
     @Override
     protected void onResume() {
         super.onResume();
@@ -49,6 +49,9 @@ public class Reminder extends AppCompatActivity {
                 startActivity(new Intent(Reminder.this,Add_medicine.class));
             }
         });
+        tinyDB = new TinyDB(getApplicationContext());
+//        TextView idPlace = (TextView) findViewById(R.id.id_place);
+//        idPlace.setText(tinyDB.getString("uid"));
     }
     private class rem_customAdapter extends ArrayAdapter{
         ArrayList<String> mName;

@@ -1,5 +1,6 @@
 package com.businessmonk.pharmameter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -33,6 +35,8 @@ public class Contact extends AppCompatActivity {
         body = (EditText)findViewById(R.id.contact_body);
         title = (EditText)findViewById(R.id.contact_title);
         tinyDB= new TinyDB(getApplicationContext());
+        TextView idPlace = (TextView) findViewById(R.id.id_place);
+        idPlace.setText(tinyDB.getString("uid"));
     }
 
     public void send(View view) {
@@ -40,7 +44,7 @@ public class Contact extends AppCompatActivity {
         msgBody = body.getText().toString();
         httpReqPost post = new httpReqPost();
         post.execute();
-    }
+        }
 
     public class httpReqPost extends AsyncTask<String, Void, String> {
         @Override
@@ -107,8 +111,13 @@ public class Contact extends AppCompatActivity {
         @Override
         protected void onPostExecute(String strings) {
             super.onPostExecute(strings);
+            Log.e("sent",strings);
+            if(strings.equals("\"Message sent.!\"")){
+                Toast.makeText(getApplicationContext(),"Sent Successfully ",Toast.LENGTH_SHORT).show();
+                Contact.this.finish();
+            }else{
+                Toast.makeText(getApplicationContext(),"Check your connection ",Toast.LENGTH_SHORT).show();
+            }
         }
-
-
     }
 }

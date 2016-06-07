@@ -42,6 +42,8 @@ public class Tip extends AppCompatActivity {
         sharedPref = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         editor = sharedPref.edit();
         tinyDB = new TinyDB(getApplicationContext());
+        TextView idPlace = (TextView) findViewById(R.id.id_place);
+        idPlace.setText(tinyDB.getString("uid"));
         bodyView = (TextView) findViewById(R.id.body);
         headView = (TextView) findViewById(R.id.head);
         tip_img = (ImageView) findViewById(R.id.tip_img);

@@ -29,13 +29,9 @@ dependencies {
     // Audience Network SDK. Only versions 4.6.0 and above are available
     // Account Kit
     compile files('libs/Gson.jar')
-    compile 'com.android.support:cardview-v7:23.3.0'
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
     compile 'com.google.android.gms:play-services:8.4.0'
-    compile 'com.google.android.gms:play-services-ads:8.4.0'
-    compile 'com.google.android.gms:play-services-auth:8.4.0'
-    compile 'com.google.android.gms:play-services-gcm:8.4.0'
     compile 'com.android.support:recyclerview-v7:21.0.0'
     compile 'com.android.support:support-v4:20.+'
     compile "com.daimajia.swipelayout:library:1.2.0@aar"

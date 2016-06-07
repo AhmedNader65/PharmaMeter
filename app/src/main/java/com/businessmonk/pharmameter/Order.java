@@ -67,6 +67,8 @@ public class Order extends AppCompatActivity {
         order_btn = (Button)findViewById(R.id.order_btn);
         totPrice.setText("0");
         tinyDB = new TinyDB(getApplicationContext());
+        TextView idPlace = (TextView) findViewById(R.id.id_place);
+        idPlace.setText(tinyDB.getString("uid"));
         product_id = new ArrayList<>();
         product_Ename = new ArrayList<>();
         product_price = new ArrayList<>();
